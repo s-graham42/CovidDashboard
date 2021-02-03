@@ -1,0 +1,6 @@
+.vscode/
+csv_files/
+db.sqlite3
+__pycache__/
+migrations/
+media/
