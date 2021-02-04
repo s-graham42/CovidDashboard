@@ -28,6 +28,23 @@ def index(request):
 def demo_charts(request):
     return render(request, "demo_charts.html")
 
+def compare_daily_cases(request):
+    caseData = []
+    deathData = []
+    labelData = []
+    this_state = State.objects.get(fips=53)
+    for item in Entry.objects.filter(state=this_state).order_by('date'):
+        caseData.append(item.cases_c)
+        deathData.append(item.deaths_c)
+        labelData.append(str(item.date))
+    context = {
+        "all_states" : State.objects.all().order_by("fips"),
+        "labels" : labelData,
+        "caseData" : caseData,
+        "deathData" : deathData,
+    }
+    return render(request, "compare_daily_cases.html", context)
+
 def upload_csv(request):
     if request.method == "POST":
         form = CsvFileForm(request.POST, request.FILES)
