@@ -1,0 +1,6 @@
+.main-nav {
+    background-image: url("../images/coronavirus_banner.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 300px;
+}
