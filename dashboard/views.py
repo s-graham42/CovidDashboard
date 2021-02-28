@@ -9,21 +9,7 @@ from covid_project.settings import BASE_DIR
 
 # Create your views here.
 def index(request):
-    caseData = []
-    deathData = []
-    labelData = []
-    this_state = State.objects.get(fips=53)
-    for item in Entry.objects.filter(state=this_state).order_by('date'):
-        caseData.append(item.cases_c)
-        deathData.append(item.deaths_c)
-        labelData.append(str(item.date))
-    context = {
-        "all_states" : State.objects.all().order_by("fips"),
-        "labels" : labelData,
-        "caseData" : caseData,
-        "deathData" : deathData,
-    }
-    return render(request, "index.html", context)
+    return render(request, "index.html")
 
 def demo_charts(request):
     return render(request, "demo_charts.html")
@@ -118,7 +104,7 @@ def oneStateDailyCases(request):
         
         return JsonResponse(data={ 'state_name': this_state.name, 'labels': labels, 'state_data': state_data })
 
-def fourStatesDailyCases(request):  # doesn't work yet
+def fourStatesDailyCases(request):
     if request.method == "POST":
         # labels = []
         state_1_data = []
