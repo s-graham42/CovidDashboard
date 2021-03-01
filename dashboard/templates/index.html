@@ -9,39 +9,41 @@
     <link rel="stylesheet" href="{% static 'css/main_style.css' %}">
 </head>
 <body>
-    <div class="main-nav d-flex align-items-end justify-content-around">
-        <nav class="row my-4">
-                <a class="col mx-2 btn btn-primary shadow-lg" href="/">Home</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg" href="/">CDC Guidelines</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg" href="/">Vaccine Info</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg" href="/upload_csv">Upload a .csv File</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg" href="/upload_success">Successful .csv Uploads</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg" href="/demos">Demo Charts</a>
-                <a class="col mx-2 btn btn-primary shadow-lg" href="/admin">[ Admin ]</a>
+    <div class="main-nav">
+        <div class="row p-4">
+            <div>
+                <h1 class="text-center text-white text-shadow-grey">Welcome to:</h1>
+                <h1 class="text-center text-white text-shadow-grey">Brad and Stephen's Covid-19 Dashboard</h1>
+            </div>
+            <div>
+                <h5 class="text-center text-white text-shadow-grey">Using quarantine time to study the Covid-19 pandemic and expand our skills.</h5>
+            </div>
+        </div>
+        <nav class="row my-auto p-3">
+                <a class="col mx-2 btn btn-primary shadow-lg text-shadow-sm" href="/">Home</a>
+                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/">CDC Guidelines</a>
+                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/">Vaccine Info</a>
+                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/upload_csv">Upload a .csv File</a>
+                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/upload_success">Successful .csv Uploads</a>
+                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/demos">Demo Charts</a>
+                <a class="col mx-2 btn btn-primary shadow-lg text-shadow-sm" href="/admin">[ Admin ]</a>
         </nav>
     </div>
     <div class="container-md mx-auto">
-        <div class="row my-4">
-            <h1 class="text-center">Welcome to:</h1>
-            <h1 class="text-center">Brad and Stephen's Covid Dashboard</h1>
-        </div>
-        <div class="row my-4">
-            <h6 class="text-center">Using quarantine time to study the Covid-19 pandemic and expand our skills.</h6>
-        </div>
-        <hr>
         <div class="row my-3">
             <h3 class="text-center">Quick Links:</h3>
         </div>
         <nav class="row">
-            <a class="col-4 mx-auto btn btn-info text-white shadow" href="/compare/daily_cases">Compare States <strong>Daily</strong> Covid cases</a>
-            <a class="col-4 mx-auto btn btn-info text-white shadow" href="/compare/cumulative_cases">Compare Sates <strong>Cumulative</strong> Covid cases</a>
+            <a class="col-4 mx-auto btn btn-info text-white shadow text-shadow-sm" href="/compare/daily_cases">Compare States <strong>Daily</strong> Covid cases</a>
+            <a class="col-4 mx-auto btn btn-info text-white shadow text-shadow-sm" href="/compare/cumulative_cases">Compare States <strong>Cumulative</strong> Covid cases</a>
+            <a class="col-4 mx-auto btn btn-danger text-white shadow text-shadow-sm" href="/compare/singleVariable">Compare a Single Variable Over Time</a>
         </nav>
         <hr>
         <div class="row my-3">
             <div class="col-6 mx-auto">
-                <a class="d-block my-2 btn btn-primary text-white shadow" href="/upload_csv">Step 1:  Upload a .csv file (Date,State,Fips,Cases,Deaths)</a>
-                <a class="d-block my-2 btn btn-primary text-white shadow" href="/upload_success">Step2:  Process an uploaded .csv file into the database</a>
-                <a class="d-block my-2 btn btn-primary text-white shadow" href="/compare/daily_cases">Step 3:  View and Manipulate Charts</a>
+                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/upload_csv">Step 1:  Upload a .csv file (Date,State,Fips,Cases,Deaths)</a>
+                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/upload_success">Step2:  Process an uploaded .csv file into the database</a>
+                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/compare/daily_cases">Step 3:  View and Manipulate Charts</a>
             </div>
         </div>
         <hr>

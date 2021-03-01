@@ -20,6 +20,23 @@ def compare_daily_cases(request):
     labelData = []
     this_state = State.objects.get(fips=53)
     for item in Entry.objects.filter(state=this_state).order_by('date'):
+        caseData.append(item.cases_d)
+        deathData.append(item.deaths_d)
+        labelData.append(str(item.date))
+    context = {
+        "all_states" : State.objects.all().order_by("fips"),
+        "labels" : labelData,
+        "caseData" : caseData,
+        "deathData" : deathData,
+    }
+    return render(request, "compare_daily_cases.html", context)
+
+def compare_single_variable(request):
+    caseData = []
+    deathData = []
+    labelData = []
+    this_state = State.objects.get(fips=53)
+    for item in Entry.objects.filter(state=this_state).order_by('date'):
         caseData.append(item.cases_c)
         deathData.append(item.deaths_c)
         labelData.append(str(item.date))
@@ -29,7 +46,7 @@ def compare_daily_cases(request):
         "caseData" : caseData,
         "deathData" : deathData,
     }
-    return render(request, "compare_daily_cases.html", context)
+    return render(request, "single_variable_over_time.html", context)
 
 def upload_csv(request):
     if request.method == "POST":
@@ -146,5 +163,45 @@ def fourStatesDailyCases(request):
             'state_4_name': state_4.name,
             'state_4_data': state_4_data})
 
+def singleVariableOverTime(request):
+    if request.method == "POST":
+        # labels = []
+        state_1_data = []
+        state_2_data = []
+        state_3_data = []
+        state_4_data = []
+        state_1 = State.objects.get(fips=request.POST['state_1'])
+        state_2 = State.objects.get(fips=request.POST['state_2'])
+        state_3 = State.objects.get(fips=request.POST['state_3'])
+        state_4 = State.objects.get(fips=request.POST['state_4'])
 
+        state_1_qs = Entry.objects.filter(state=state_1).order_by('date')
+        for entry in state_1_qs:
+            s1date = datetime.datetime.strftime(entry.date, "%m/%d/%Y")
+            state_1_data.append([s1date, entry.cases_d])
+
+        state_2_qs = Entry.objects.filter(state=state_2).order_by('date')
+        for entry in state_2_qs:
+            s2date = datetime.datetime.strftime(entry.date, "%m/%d/%Y")
+            state_2_data.append([s2date, entry.cases_d])
+
+        state_3_qs = Entry.objects.filter(state=state_3).order_by('date')
+        for entry in state_3_qs:
+            s3date = datetime.datetime.strftime(entry.date, "%m/%d/%Y")
+            state_3_data.append([s3date, entry.cases_d])
+
+        state_4_qs = Entry.objects.filter(state=state_4).order_by('date')
+        for entry in state_4_qs:
+            s4date = datetime.datetime.strftime(entry.date, "%m/%d/%Y")
+            state_4_data.append([s4date, entry.cases_d])
+        
+        return JsonResponse(data={  #'labels': labels,
+            'state_1_name': state_1.name,
+            'state_1_data': state_1_data,
+            'state_2_name': state_2.name,
+            'state_2_data': state_2_data,
+            'state_3_name': state_3.name,
+            'state_3_data': state_3_data,
+            'state_4_name': state_4.name,
+            'state_4_data': state_4_data})
 
