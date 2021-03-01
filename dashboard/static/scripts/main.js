@@ -132,28 +132,7 @@ $("#fourStatesDC").submit(function(e) {
         }
     });
 });
-// var lineCtx = document.getElementById('lineChart').getContext('2d');
-// var lineChart = new Chart (lineCtx, {
-//     type: 'line',
-//     data: {
-//         labels: ['2020-01-21', '2020-02-21', '2020-03-21', '2020-04-21', '2020-05-21', '2020-06-21', '2020-07-21'],
-//         // labels: ['', '', '', '', '', '', ''],
-//         datasets: [{
-//             label: "My First Dataset",
-//             backgroundColor: 'rgb(255, 99, 132)',
-//             borderColor: 'rgb(255, 99, 132)',
-//             data: [0, 10, 5, 2, 20, 30, 45],
-//         }, {
-//             label: "My Second Dataset",
-//             backgroundColor: 'rgb(132, 99, 255)',
-//             borderColor: 'rgb(132, 99, 255)',
-//             data: [10, 22, 45, 12, 25, 40, 33],
-//         }]
-//     },
-//     options: {
-//         title : { display : true, position : 'top', text : "Example Line Chart" },
-//         }
-// });
+
 
 // ----------------------- Scatter Chart ----------------------------
 var scatterCtx = document.getElementById('scatterChart').getContext('2d');
