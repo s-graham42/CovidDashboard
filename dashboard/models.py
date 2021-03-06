@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# DB Model to hold uploaded csv files.
 class CsvFile(models.Model):
     name = models.CharField(max_length=150, unique=True)
     description  = models.TextField()
