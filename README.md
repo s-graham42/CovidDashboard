@@ -22,6 +22,6 @@ You can also view and manipulate live API datasets from the following sources:
 - Page Styling uses the **Bootstrap** CSS framework.
 <hr><br>
 
-If you would like to fork and run this project, we've provided some [step-by-step instructions to get you going in covid_project\ToRunThisProject.md](https://github.com/s-graham42/CovidDashboard/blob/main/ToRunThisProject.md)
+If you would like to fork and run this project, we've provided some [step-by-step instructions to get you going in covid_project\ToRunThisProject.md](ToRunThisProject.md)
 
-A list of necessary packages to install with some instructions is in [covid_project\dependencies.md](https://github.com/s-graham42/CovidDashboard/blob/main/dependencies.md)
+A list of necessary packages to install with some instructions is in [covid_project\dependencies.md](dependencies.md)
