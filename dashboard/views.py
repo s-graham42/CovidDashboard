@@ -6,8 +6,21 @@ import csv
 import json
 import datetime
 from covid_project.settings import BASE_DIR
+from .db_processing import *
 
-# Create your views here.
+
+"""
+ 
+ .##....##....###....##.....##.####..######......###....########.####..#######..##....##
+ .###...##...##.##...##.....##..##..##....##....##.##......##.....##..##.....##.###...##
+ .####..##..##...##..##.....##..##..##.........##...##.....##.....##..##.....##.####..##
+ .##.##.##.##.....##.##.....##..##..##...####.##.....##....##.....##..##.....##.##.##.##
+ .##..####.#########..##...##...##..##....##..#########....##.....##..##.....##.##..####
+ .##...###.##.....##...##.##....##..##....##..##.....##....##.....##..##.....##.##...###
+ .##....##.##.....##....###....####..######...##.....##....##....####..#######..##....##
+ 
+"""
+
 def index(request):
     return render(request, "index.html")
 
@@ -48,6 +61,18 @@ def compare_single_variable(request):
     }
     return render(request, "single_variable_over_time.html", context)
 
+"""
+ 
+ ....###....########..##.....##.####.##....##
+ ...##.##...##.....##.###...###..##..###...##
+ ..##...##..##.....##.####.####..##..####..##
+ .##.....##.##.....##.##.###.##..##..##.##.##
+ .#########.##.....##.##.....##..##..##..####
+ .##.....##.##.....##.##.....##..##..##...###
+ .##.....##.########..##.....##.####.##....##
+ 
+"""
+
 def upload_csv(request):
     if request.method == "POST":
         form = CsvFileForm(request.POST, request.FILES)
@@ -67,13 +92,30 @@ def upload_success(request):
     }
     return render(request, "upload_success.html", context)
 
+"""
+ 
+ .##....##.......##......##..#######..########..##....##.####.##....##..######......##.....##.########.########..########
+ ..##....##......##..##..##.##.....##.##.....##.##...##...##..###...##.##....##.....##.....##.##.......##.....##.##......
+ ...##....##.....##..##..##.##.....##.##.....##.##..##....##..####..##.##...........##.....##.##.......##.....##.##......
+ ....##....##....##..##..##.##.....##.########..#####.....##..##.##.##.##...####....#########.######...########..######..
+ ...##....##.....##..##..##.##.....##.##...##...##..##....##..##..####.##....##.....##.....##.##.......##...##...##......
+ ..##....##......##..##..##.##.....##.##....##..##...##...##..##...###.##....##.....##.....##.##.......##....##..##......
+ .##....##........###..###...#######..##.....##.##....##.####.##....##..######......##.....##.########.##.....##.########
+ 
+"""
+
 def db_load_csv(request, id):
     if request.method == "POST":
+        start = datetime.datetime.now()
         file_to_load = CsvFile.objects.filter(id=id)
         if len(file_to_load) > 0:
             file_to_load = file_to_load[0]
+                # go through the file, check all the states and put them in the database if they are not there already.
+            checked_states = check_and_create_states(file_to_load)
+            print(checked_states)
+                # go through the file again and create or update entries -no dailies yet
             with open(BASE_DIR + file_to_load.file.url) as csv_file:
-                csv_reader = csv.reader(csv_file, delimiter=',')
+                csv_reader = csv.reader(csv_file, delimiter=',')                
                 row_count = 0
                 for row in csv_reader:
                     if row[0] == "date":
@@ -81,24 +123,48 @@ def db_load_csv(request, id):
                     else:
                         # "date","state","fips","cases","deaths"
                         print(f"processing row {row_count}")
-                        this_state = State.objects.update_or_create(defaults={'name': row[1], 'file': file_to_load}, fips=int(row[2]))
-                        this_state = this_state[0]
+                        this_state = State.objects.get(fips=int(row[2]))
                         entry_date = datetime.datetime.strptime(row[0], "%Y-%m-%d").date()
-                        previous_entries = Entry.objects.filter(state=this_state, date__lt=entry_date)
-                        # print(previous_entries)
-                        if len(previous_entries) == 0:
-                            Entry.objects.update_or_create(defaults={'cases_c': int(row[3]),'cases_d': int(row[3]), 'deaths_c': int(row[4]), 'deaths_d': int(row[4])}, date=entry_date, state=this_state)
-                            row_count += 1
-                        else:
-                            # "date","state","fips","cases","deaths"
-                            previous_entry = previous_entries.latest('date')
-                            print("prev entry: " + str(previous_entry))
-                            daily_cases = (int(row[3]) - previous_entry.cases_c)
-                            daily_deaths = (int(row[4]) - previous_entry.deaths_c)
-                            Entry.objects.update_or_create(defaults={'cases_c': int(row[3]),'cases_d': daily_cases, 'deaths_c': int(row[4]), 'deaths_d': daily_deaths}, date=entry_date, state=this_state)
-                            row_count += 1
+                        Entry.objects.create(date=entry_date, state=this_state, cases_c = int(row[3]), cases_d = 0, deaths_c = int(row[4]), deaths_d = 0)
+                        print("entry created")
+                        row_count += 1
+                end = datetime.datetime.now()
+                print("start: ", start)
+                print("end: ", end)
+                print("time to complete: ", (end - start))
                 return redirect(f'/db_load_success/{row_count}')
     return redirect('/upload_success')
+
+#                 row_count = 0
+#                 for row in csv_reader:
+#                     if row[0] == "date":
+#                         row_count += 1
+#                     else:
+#                         # "date","state","fips","cases","deaths"
+#                         print(f"processing row {row_count}")
+#                         this_state = State.objects.get(fips=int(row[2]))
+#                         entry_date = datetime.datetime.strptime(row[0], "%Y-%m-%d").date()
+#                         previous_entries = Entry.objects.filter(state=this_state, date__lt=entry_date)
+#                         # print(previous_entries)
+#                         if len(previous_entries) == 0:
+#                             Entry.objects.update_or_create(defaults={'cases_c': int(row[3]),'cases_d': int(row[3]), 'deaths_c': int(row[4]), 'deaths_d': int(row[4])}, date=entry_date, state=this_state)
+#                             row_count += 1
+#                         else:
+#                             # "date","state","fips","cases","deaths"
+#                             previous_entry = previous_entries.latest('date')
+#                             print("prev entry: " + str(previous_entry))
+#                             daily_cases = (int(row[3]) - previous_entry.cases_c)
+#                             daily_deaths = (int(row[4]) - previous_entry.deaths_c)
+#                             Entry.objects.update_or_create(defaults={'cases_c': int(row[3]),'cases_d': daily_cases, 'deaths_c': int(row[4]), 'deaths_d': daily_deaths}, date=entry_date, state=this_state)
+#                             row_count += 1
+#                 return redirect(f'/db_load_success/{row_count}')
+#     return redirect('/upload_success')
+
+
+
+
+
+
 
 def db_load_sucess(request, row_count):
     context = {
@@ -106,7 +172,17 @@ def db_load_sucess(request, row_count):
     }
     return render(request, "db_load_success.html", context)
 
-# ----------  Chart Views ----------
+"""
+ 
+ ..######..##.....##....###....########..########....##.....##.####.########.##......##..######.
+ .##....##.##.....##...##.##...##.....##....##.......##.....##..##..##.......##..##..##.##....##
+ .##.......##.....##..##...##..##.....##....##.......##.....##..##..##.......##..##..##.##......
+ .##.......#########.##.....##.########.....##.......##.....##..##..######...##..##..##..######.
+ .##.......##.....##.#########.##...##......##........##...##...##..##.......##..##..##.......##
+ .##....##.##.....##.##.....##.##....##.....##.........##.##....##..##.......##..##..##.##....##
+ ..######..##.....##.##.....##.##.....##....##..........###....####.########..###..###...######.
+ 
+"""
 
 def oneStateDailyCases(request):
     if request.method == "POST":
