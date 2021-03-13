@@ -31,3 +31,26 @@ def check_and_create_states(file_to_load):
                         checked_states.append(new_state.fips)
                 row_count += 1
     return checked_states
+
+def replace_all_entries(file_to_load):
+    Entry.objects.all().delete()  # DELETING ALL ENTRIES IN FAVOR OF NEW ENTRIES
+    with open(BASE_DIR + file_to_load.file.url) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')                
+        row_count = 0
+        for row in csv_reader:
+            if row[0] == "date":
+                row_count += 1
+            else:
+                # "date","state","fips","cases","deaths"
+                print(f"processing row {row_count}")
+                this_state = State.objects.get(fips=int(row[2]))
+                entry_date = datetime.datetime.strptime(row[0], "%Y-%m-%d").date()
+                Entry.objects.create(date=entry_date, state=this_state, cases_c = int(row[3]), cases_d = 0, deaths_c = int(row[4]), deaths_d = 0)
+                row_count += 1
+    return row_count
+
+# def calculate_dailies():
+#     all_states = State.objects.all()
+
+#     for this_state in all_states:
+#         state_entries = Entry.objects.filter(state = this_state)

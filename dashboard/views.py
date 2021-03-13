@@ -114,25 +114,15 @@ def db_load_csv(request, id):
             checked_states = check_and_create_states(file_to_load)
             print(checked_states)
                 # go through the file again and create or update entries -no dailies yet
-            with open(BASE_DIR + file_to_load.file.url) as csv_file:
-                csv_reader = csv.reader(csv_file, delimiter=',')                
-                row_count = 0
-                for row in csv_reader:
-                    if row[0] == "date":
-                        row_count += 1
-                    else:
-                        # "date","state","fips","cases","deaths"
-                        print(f"processing row {row_count}")
-                        this_state = State.objects.get(fips=int(row[2]))
-                        entry_date = datetime.datetime.strptime(row[0], "%Y-%m-%d").date()
-                        Entry.objects.create(date=entry_date, state=this_state, cases_c = int(row[3]), cases_d = 0, deaths_c = int(row[4]), deaths_d = 0)
-                        print("entry created")
-                        row_count += 1
-                end = datetime.datetime.now()
-                print("start: ", start)
-                print("end: ", end)
-                print("time to complete: ", (end - start))
-                return redirect(f'/db_load_success/{row_count}')
+            processed_rows = replace_all_entries(file_to_load)
+            print("Processed rows: ", processed_rows)
+
+
+            end = datetime.datetime.now()
+            print("start: ", start)
+            print("end: ", end)
+            print("time to complete: ", (end - start))
+            return redirect(f'/db_load_success/{processed_rows}')
     return redirect('/upload_success')
 
 #                 row_count = 0
