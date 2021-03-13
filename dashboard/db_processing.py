@@ -49,8 +49,28 @@ def replace_all_entries(file_to_load):
                 row_count += 1
     return row_count
 
-# def calculate_dailies():
-#     all_states = State.objects.all()
+def calculate_all_dailies():
+    all_states = State.objects.all()
+    states_processed = 0
 
-#     for this_state in all_states:
-#         state_entries = Entry.objects.filter(state = this_state)
+    for this_state in all_states:
+        state_entries = Entry.objects.filter(state = this_state).order_by("date")
+
+        entry_count = 0
+        previous_entry = None
+
+        for entry in state_entries:
+            if entry_count == 0:
+                previous_entry = entry
+                entry_count += 1
+            else:
+                entry.cases_d = entry.cases_c - previous_entry.cases_c
+                entry.deaths_d = entry.deaths_c - previous_entry.deaths_c
+                entry.save()
+                previous_entry = entry
+                entry_count += 1
+            print(entry.state.name, " dailies processed.")
+
+        states_processed += 1
+    
+    return states_processed

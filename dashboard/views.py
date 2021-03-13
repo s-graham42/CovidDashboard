@@ -92,18 +92,6 @@ def upload_success(request):
     }
     return render(request, "upload_success.html", context)
 
-"""
- 
- .##....##.......##......##..#######..########..##....##.####.##....##..######......##.....##.########.########..########
- ..##....##......##..##..##.##.....##.##.....##.##...##...##..###...##.##....##.....##.....##.##.......##.....##.##......
- ...##....##.....##..##..##.##.....##.##.....##.##..##....##..####..##.##...........##.....##.##.......##.....##.##......
- ....##....##....##..##..##.##.....##.########..#####.....##..##.##.##.##...####....#########.######...########..######..
- ...##....##.....##..##..##.##.....##.##...##...##..##....##..##..####.##....##.....##.....##.##.......##...##...##......
- ..##....##......##..##..##.##.....##.##....##..##...##...##..##...###.##....##.....##.....##.##.......##....##..##......
- .##....##........###..###...#######..##.....##.##....##.####.##....##..######......##.....##.########.##.....##.########
- 
-"""
-
 def db_load_csv(request, id):
     if request.method == "POST":
         start = datetime.datetime.now()
@@ -116,45 +104,16 @@ def db_load_csv(request, id):
                 # go through the file again and create or update entries -no dailies yet
             processed_rows = replace_all_entries(file_to_load)
             print("Processed rows: ", processed_rows)
-
-
+                # go through all the states and calculate daily values.
+            processed_states = calculate_all_dailies()
+            print("Processed States: ", processed_states)
+                # print stats to terminal
             end = datetime.datetime.now()
             print("start: ", start)
             print("end: ", end)
             print("time to complete: ", (end - start))
             return redirect(f'/db_load_success/{processed_rows}')
     return redirect('/upload_success')
-
-#                 row_count = 0
-#                 for row in csv_reader:
-#                     if row[0] == "date":
-#                         row_count += 1
-#                     else:
-#                         # "date","state","fips","cases","deaths"
-#                         print(f"processing row {row_count}")
-#                         this_state = State.objects.get(fips=int(row[2]))
-#                         entry_date = datetime.datetime.strptime(row[0], "%Y-%m-%d").date()
-#                         previous_entries = Entry.objects.filter(state=this_state, date__lt=entry_date)
-#                         # print(previous_entries)
-#                         if len(previous_entries) == 0:
-#                             Entry.objects.update_or_create(defaults={'cases_c': int(row[3]),'cases_d': int(row[3]), 'deaths_c': int(row[4]), 'deaths_d': int(row[4])}, date=entry_date, state=this_state)
-#                             row_count += 1
-#                         else:
-#                             # "date","state","fips","cases","deaths"
-#                             previous_entry = previous_entries.latest('date')
-#                             print("prev entry: " + str(previous_entry))
-#                             daily_cases = (int(row[3]) - previous_entry.cases_c)
-#                             daily_deaths = (int(row[4]) - previous_entry.deaths_c)
-#                             Entry.objects.update_or_create(defaults={'cases_c': int(row[3]),'cases_d': daily_cases, 'deaths_c': int(row[4]), 'deaths_d': daily_deaths}, date=entry_date, state=this_state)
-#                             row_count += 1
-#                 return redirect(f'/db_load_success/{row_count}')
-#     return redirect('/upload_success')
-
-
-
-
-
-
 
 def db_load_sucess(request, row_count):
     context = {
