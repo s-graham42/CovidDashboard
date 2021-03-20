@@ -13,19 +13,29 @@
         <div class="row p-4">
             <div>
                 <h1 class="text-center text-white text-shadow-grey">Welcome to:</h1>
-                <h1 class="text-center text-white text-shadow-grey">Brad and Stephen's Covid-19 Dashboard</h1>
+                <h1 class="text-center text-white text-shadow-grey">GhostDucky's Covid-19 Dashboard</h1>
             </div>
             <div>
-                <h5 class="text-center text-white text-shadow-grey">Using quarantine time to study the Covid-19 pandemic and expand our skills.</h5>
+                <h5 class="text-center text-white text-shadow-grey">Visualizing U.S. Covid-19 Data</h5>
             </div>
         </div>
         <nav class="row my-auto p-3">
                 <a class="col mx-2 btn btn-primary shadow-lg text-shadow-sm" href="/">Home</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/">CDC Guidelines</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/">Vaccine Info</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/upload_csv">Upload a .csv File</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/upload_success">Successful .csv Uploads</a>
-                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/demos">Demo Charts</a>
+                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/">General Covid-19 Information</a>
+                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/">Vaccine Information</a>
+                <!-- <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/">Covid-19 Datasets</a> -->
+                <div class="col mx-2 dropdown">
+                    <button class="btn btn-info text-white shadow-lg text-shadow-sm dropdown-toggle" style="width: 100%" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Covid-19 Datasets
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">CDC</a></li>
+                        <li><a class="dropdown-item" href="#">Johns Hopkins</a></li>
+                        <li><a class="dropdown-item" href="/compare/singleVariable">New York Times</a></li>
+                    </ul>
+                </div>
+                <!-- <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/upload_success">Successful .csv Uploads</a>
+                <a class="col mx-2 btn btn-info text-white shadow-lg text-shadow-sm" href="/demos">Demo Charts</a> -->
                 <a class="col mx-2 btn btn-primary shadow-lg text-shadow-sm" href="/admin">[ Admin ]</a>
         </nav>
     </div>
