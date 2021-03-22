@@ -1,21 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covid Dashboard Main Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    {% load static %}
-</head>
-<body>
-    <div class="container-md mx-auto">
-        <nav class="row my-3">
-            <a class="col-2 mx-auto btn btn-success" href="/">Home</a>
-            <a class="col-2 mx-auto btn btn-info text-white" href="/upload_csv">Upload a .csv File</a>
-            <a class="col-2 mx-auto btn btn-info text-white" href="/upload_success">Successful .csv Uploads</a>
-            <a class="col-2 mx-auto btn btn-info text-white" href="/demos">Demo Charts</a>
-            <a class="col-2 mx-auto btn btn-warning text-white" href="/admin">[ Admin ]</a>
-        </nav>
+        {% extends "inner_base.html" %}
+        {% block content %}
+
+        <div class="row my-3">
+            <div class="col-6 mx-auto">
+                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/upload_csv">Step 1:  Upload a .csv file (Date,State,Fips,Cases,Deaths)</a>
+                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/upload_success">Step2:  Process an uploaded .csv file into the database</a>
+                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/compare/daily_cases">Step 3:  View and Manipulate Charts</a>
+            </div>
+        </div>
+        
         <div class="row my-4">
             <h1 class="text-center">Upload a CsvFile!</h1>
         </div>
@@ -29,15 +22,5 @@
             </div>
 
         </div>
-        <div class="row my-3">
-            <div class="col-6 mx-auto">
-                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/upload_csv">Step 1:  Upload a .csv file (Date,State,Fips,Cases,Deaths)</a>
-                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/upload_success">Step2:  Process an uploaded .csv file into the database</a>
-                <a class="d-block my-2 btn btn-primary text-white shadow text-shadow-sm" href="/compare/daily_cases">Step 3:  View and Manipulate Charts</a>
-            </div>
-        </div>
-    </div>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-</html>
+        
+        {% endblock %}

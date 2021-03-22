@@ -15,3 +15,9 @@
     background-color: grey;
     min-height: 100px;
 }
+.bg-footer {
+    background-image: url("../images/greyscale_banner_faded.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 300px;
+}
