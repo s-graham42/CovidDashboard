@@ -123,7 +123,7 @@ Starting development server at http://127.0.0.1:8000/
 ```
 **11)  Workflow:**
 When working on the project, the suggested git workflow is as follows:  
-At the beginning if the day:
+At the beginning of the day:
  - Change to main branch
  ```
  [myName]>git checkout main
