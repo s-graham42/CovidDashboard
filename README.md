@@ -4,7 +4,7 @@ A Web App Dashboard for visualizing covid-19 data.
 
 This project was born out of a desire to be able to visualize and explore the data surounding the covid-19 pandemic.  We would build a sandbox where covid-19 data could be selected, compared and manipulated in order to gain new insights and better understanding of the impact of this deadly time.
 <hr><br>
-https://user-images.githubusercontent.com/68925652/111967542-68638b80-8ab5-11eb-915f-cfa713c54a2f.mp4
+[![First Page of the Project](https://user-images.githubusercontent.com/68925652/111967542-68638b80-8ab5-11eb-915f-cfa713c54a2f.mp4)
 <br>
 ## Datasets
 Admins of the app can upload csv files to load information into the onboard SQLite Database.  To begin with, we used the [.csv file on the NY Times github](https://github.com/nytimes/covid-19-data/blob/master/us-states.csv)
