@@ -1,2 +1,7 @@
 install.packages('dplyer')
-install.packages('ggplots2')
+install.packages('psych')
+install.packages('plyer')
+install.packages('jsonify')
+install.packages('jsonlite')
+install.packages('stringr')
+install.packages('stats')
