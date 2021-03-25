@@ -11,21 +11,27 @@ from .db_processing import *
 
 """
  
- .##....##....###....##.....##.####..######......###....########.####..#######..##....##
- .###...##...##.##...##.....##..##..##....##....##.##......##.....##..##.....##.###...##
- .####..##..##...##..##.....##..##..##.........##...##.....##.....##..##.....##.####..##
- .##.##.##.##.....##.##.....##..##..##...####.##.....##....##.....##..##.....##.##.##.##
- .##..####.#########..##...##...##..##....##..#########....##.....##..##.....##.##..####
- .##...###.##.....##...##.##....##..##....##..##.....##....##.....##..##.....##.##...###
- .##....##.##.....##....###....####..######...##.....##....##....####..#######..##....##
+ .##.....##....###....####.##....##....##....##....###....##.....##
+ .###...###...##.##....##..###...##....###...##...##.##...##.....##
+ .####.####..##...##...##..####..##....####..##..##...##..##.....##
+ .##.###.##.##.....##..##..##.##.##....##.##.##.##.....##.##.....##
+ .##.....##.#########..##..##..####....##..####.#########..##...##.
+ .##.....##.##.....##..##..##...###....##...###.##.....##...##.##..
+ .##.....##.##.....##.####.##....##....##....##.##.....##....###...
  
 """
 
 def index(request):
     return render(request, "index.html")
 
-def demo_charts(request):
-    return render(request, "demo_charts.html")
+def covid_info(request):
+    return render(request, "covid_info.html")
+
+def vaccines_main(request):
+    return render(request, "vaccines/vaccines_main.html")
+
+def dashboard_admin(request):
+    return render(request, "admin/dashboard_admin.html")
 
 def compare_daily_cases(request):
     caseData = []
@@ -73,6 +79,9 @@ def compare_single_variable(request):
  
 """
 
+def demo_charts(request):
+    return render(request, "admin/demo_charts.html")
+
 def upload_csv(request):
     if request.method == "POST":
         form = CsvFileForm(request.POST, request.FILES)
@@ -81,16 +90,16 @@ def upload_csv(request):
             new_desc = form.cleaned_data['description']
             new_file = form.cleaned_data['file']
             CsvFile.objects.create(name=new_name, description=new_desc, file=new_file)
-            return redirect("/upload_success")
+            return redirect("dashboard_admin/upload_success")
     else:
         form = CsvFileForm()
-    return render(request, "upload_csv.html", {'form' : form})
+    return render(request, "admin/upload_csv.html", {'form' : form})
 
 def upload_success(request):
     context = {
         'all_files' : CsvFile.objects.all(),
     }
-    return render(request, "upload_success.html", context)
+    return render(request, "admin/upload_success.html", context)
 
 def db_load_csv(request, id):
     if request.method == "POST":
@@ -112,14 +121,14 @@ def db_load_csv(request, id):
             print("start: ", start)
             print("end: ", end)
             print("time to complete: ", (end - start))
-            return redirect(f'/db_load_success/{processed_rows}')
-    return redirect('/upload_success')
+            return redirect(f'dashboard_admin/db_load_success/{processed_rows}')
+    return redirect('dashboard_admin/upload_success')
 
 def db_load_sucess(request, row_count):
     context = {
         'row_count' : row_count,
     }
-    return render(request, "db_load_success.html", context)
+    return render(request, "admin/db_load_success.html", context)
 
 """
  

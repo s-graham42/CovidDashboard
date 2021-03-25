@@ -1,0 +1,7 @@
+Pfizer Vaccine Allocations by Jurisdiction:  https://data.cdc.gov/resource/saz5-9hgg.csv
+Moderna Vaccine Allocations by Jurisdiction: https://data.cdc.gov/resource/b7pe-5nws.csv
+Janssen Vaccine Allocations by Jurisdiction: https://data.cdc.gov/resource/w9zu-fywh.csv
+
+US Cases and Deaths by state over time:  https://data.cdc.gov/resource/9mfq-cb36.csv
+
+NYT US Cases and Deaths by state over time: https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv
