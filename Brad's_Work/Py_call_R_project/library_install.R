@@ -1,0 +1,7 @@
+install.packages('dplyer')
+install.packages('psych')
+install.packages('plyer')
+install.packages('jsonify')
+install.packages('jsonlite')
+install.packages('stringr')
+install.packages('stats')
