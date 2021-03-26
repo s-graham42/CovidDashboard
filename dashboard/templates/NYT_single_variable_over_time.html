@@ -4,7 +4,7 @@
     {% block content %}
 
     {% load static %}
-    <div class="container-md mx-auto" onload="submitOnLoad()">
+    <div class="container-md mx-auto">
 
         <!-- **************  LINE CHART ***************** -->
         <div class="row my-3">
@@ -15,6 +15,7 @@
                 <canvas class="my-3" id="singleVariableOTCanvas"></canvas>
             </div>
         </div>
+        <!--    Data Manipulation Form    -->
         <form class="col mx-auto" id="singleVariableOTForm" action="/charts/singleVariableOverTime" method="POST">
             {% csrf_token %}
             <div class="row">
