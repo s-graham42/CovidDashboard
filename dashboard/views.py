@@ -7,19 +7,28 @@ import json
 import datetime
 from covid_project.settings import BASE_DIR
 from .db_processing import *
+from .datasources import *
 
+# """
+ 
+#  88 88b 88 88 888888     8888b.     db    888888    db    .dP"Y8  dP"Yb  88   88 88""Yb  dP""b8 888888 .dP"Y8 
+#  88 88Yb88 88   88        8I  Yb   dPYb     88     dPYb   `Ybo." dP   Yb 88   88 88__dP dP   `" 88__   `Ybo." 
+#  88 88 Y88 88   88        8I  dY  dP__Yb    88    dP__Yb  o.`Y8b Yb   dP Y8   8P 88"Yb  Yb      88""   o.`Y8b 
+#  88 88  Y8 88   88       8888Y"  dP""""Yb   88   dP""""Yb 8bodP'  YbodP  `YbodP' 88  Yb  YboodP 888888 8bodP' 
+ 
+# """
 
-"""
+nyt_data = NewYorkTimesData()
+print(nyt_data, " initailized.")
+
+# """
  
- .##.....##....###....####.##....##....##....##....###....##.....##
- .###...###...##.##....##..###...##....###...##...##.##...##.....##
- .####.####..##...##...##..####..##....####..##..##...##..##.....##
- .##.###.##.##.....##..##..##.##.##....##.##.##.##.....##.##.....##
- .##.....##.#########..##..##..####....##..####.#########..##...##.
- .##.....##.##.....##..##..##...###....##...###.##.....##...##.##..
- .##.....##.##.....##.####.##....##....##....##.##.....##....###...
+#  8b    d8    db    88 88b 88     88b 88    db    Yb    dP 88  dP""b8    db    888888 88  dP"Yb  88b 88 
+#  88b  d88   dPYb   88 88Yb88     88Yb88   dPYb    Yb  dP  88 dP   `"   dPYb     88   88 dP   Yb 88Yb88 
+#  88YbdP88  dP__Yb  88 88 Y88     88 Y88  dP__Yb    YbdP   88 Yb  "88  dP__Yb    88   88 Yb   dP 88 Y88 
+#  88 YY 88 dP""""Yb 88 88  Y8     88  Y8 dP""""Yb    YP    88  YboodP dP""""Yb   88   88  YbodP  88  Y8 
  
-"""
+# """
 
 def index(request):
     return render(request, "index.html")
@@ -36,20 +45,18 @@ def dashboard_admin(request):
 def apiData(request):
     pass
 
+# """
+ 
+#     db    88""Yb 88     88b 88    db    Yb    dP 88  dP""b8    db    888888 88  dP"Yb  88b 88 
+#    dPYb   88__dP 88     88Yb88   dPYb    Yb  dP  88 dP   `"   dPYb     88   88 dP   Yb 88Yb88 
+#   dP__Yb  88"""  88     88 Y88  dP__Yb    YbdP   88 Yb  "88  dP__Yb    88   88 Yb   dP 88 Y88 
+#  dP""""Yb 88     88     88  Y8 dP""""Yb    YP    88  YboodP dP""""Yb   88   88  YbodP  88  Y8 
+ 
+# """
+
 def nyt_svot(request):
-    caseData = []
-    deathData = []
-    labelData = []
-    this_state = State.objects.get(fips=53)
-    for item in Entry.objects.filter(state=this_state).order_by('date'):
-        caseData.append(item.cases_c)
-        deathData.append(item.deaths_c)
-        labelData.append(str(item.date))
     context = {
         "all_states" : State.objects.all().order_by("fips"),
-        "labels" : labelData,
-        "caseData" : caseData,
-        "deathData" : deathData,
     }
     return render(request, "NYT_single_variable_over_time.html", context)
 
@@ -87,17 +94,14 @@ def compare_single_variable(request):
     }
     return render(request, "single_variable_over_time.html", context)
 
-"""
+# """
  
- ....###....########..##.....##.####.##....##
- ...##.##...##.....##.###...###..##..###...##
- ..##...##..##.....##.####.####..##..####..##
- .##.....##.##.....##.##.###.##..##..##.##.##
- .#########.##.....##.##.....##..##..##..####
- .##.....##.##.....##.##.....##..##..##...###
- .##.....##.########..##.....##.####.##....##
+#     db    8888b.  8b    d8 88 88b 88 
+#    dPYb    8I  Yb 88b  d88 88 88Yb88 
+#   dP__Yb   8I  dY 88YbdP88 88 88 Y88 
+#  dP""""Yb 8888Y"  88 YY 88 88 88  Y8 
  
-"""
+# """
 
 def demo_charts(request):
     return render(request, "admin/demo_charts.html")
@@ -150,17 +154,15 @@ def db_load_sucess(request, row_count):
     }
     return render(request, "admin/db_load_success.html", context)
 
-"""
+# """
  
- ..######..##.....##....###....########..########....##.....##.####.########.##......##..######.
- .##....##.##.....##...##.##...##.....##....##.......##.....##..##..##.......##..##..##.##....##
- .##.......##.....##..##...##..##.....##....##.......##.....##..##..##.......##..##..##.##......
- .##.......#########.##.....##.########.....##.......##.....##..##..######...##..##..##..######.
- .##.......##.....##.#########.##...##......##........##...##...##..##.......##..##..##.......##
- .##....##.##.....##.##.....##.##....##.....##.........##.##....##..##.......##..##..##.##....##
- ..######..##.....##.##.....##.##.....##....##..........###....####.########..###..###...######.
+#   dP""b8 88  88    db    88""Yb 888888     Yb    dP 88 888888 Yb        dP .dP"Y8 
+#  dP   `" 88  88   dPYb   88__dP   88        Yb  dP  88 88__    Yb  db  dP  `Ybo." 
+#  Yb      888888  dP__Yb  88"Yb    88         YbdP   88 88""     YbdPYbdP   o.`Y8b 
+#   YboodP 88  88 dP""""Yb 88  Yb   88          YP    88 888888    YP  YP    8bodP' 
  
-"""
+# """
+
 
 def oneStateDailyCases(request):
     if request.method == "POST":
