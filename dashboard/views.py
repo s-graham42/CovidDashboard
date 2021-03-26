@@ -219,6 +219,18 @@ def fourStatesDailyCases(request):
             'state_4_name': state_4.name,
             'state_4_data': state_4_data})
 
+def get_column(interval, datapoint):
+    if (interval == "cumulative" and datapoint == "cases"):
+        return "cases"
+    elif (interval == "cumulative" and datapoint == "deaths"):
+        return "deaths"
+    elif (interval == "daily" and datapoint == "cases"):
+        return "cases_d"
+    elif (interval == "daily" and datapoint == "deaths"):
+        return "deaths_d"
+    else:
+        raise ValueError("Valid values are only 'cumulative' or 'daily', and 'cases' or 'deaths'.")
+
 def singleVariableOverTime(request):
     if request.method == "POST":
         # labels = []

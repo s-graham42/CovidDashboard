@@ -9,10 +9,10 @@ class NewYorkTimesData:
 
     def __init__(self):
         self.date = datetime.date.today()
-        self.df = self.get_new_from_api()
+        self.df = self.get_new_from_api()   # generates a new dataframe from a fresh api pull.
     
     def __str__(self):
-        return f"NYT api data {self.date}"
+        return f"NYT api data ({self.date})"
     
     def get_source(self):
         return self.source
@@ -54,16 +54,21 @@ class NewYorkTimesData:
 
         return new_frame
 
+                    # get all entries for a particular state (fips number)
     def get_all_by_state(self, fips, column):
         this_state = State.objects.get(fips=fips)
         this_data = self.df.loc[(self.df["fips"] == fips), ["date", "state", column]].sort_values(by=['date'])
         return {"state": this_state.name, "dates": this_data["date"].tolist(), "data": this_data[column].tolist()}
 
+                    # get all entries for a paticular state in a date range (start and end are strings yyyy-mm-dd)
     def get_state_by_date_range(self, fips, start, end, column):
         this_state = State.objects.get(fips=fips)
-        this_data = self.df.loc[(self.df["date"] >= start) & (self.df["date"] <= end) & (self.df["fips"] == fips), ["date", "state", column]].sort_values(by=['date'])
+        this_data = self.df.loc[(self.df["date"] >= start) & (self.df["date"] <= end) & (self.df["fips"] == fips), ["date", column]].sort_values(by=['date'])
+        this_xy = list(this_data.to_records(index=False))
         # return dictionary state:state name, dates:list of dates, data:requested dataset 
-        return {"state": this_state.name, "dates": this_data["date"].tolist(), "data": this_data[column].tolist()}
+        return {"state": this_state.name, "data": this_xy}
+
+
 
     #  FUTURE FUNCTIONALITY - STORE API-PULLED DATA AS A CSV FILE / DOESN'T WORK YET
         # write dataframe to csv file
