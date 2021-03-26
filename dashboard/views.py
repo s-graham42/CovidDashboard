@@ -33,6 +33,26 @@ def vaccines_main(request):
 def dashboard_admin(request):
     return render(request, "admin/dashboard_admin.html")
 
+def apiData(request):
+    pass
+
+def nyt_svot(request):
+    caseData = []
+    deathData = []
+    labelData = []
+    this_state = State.objects.get(fips=53)
+    for item in Entry.objects.filter(state=this_state).order_by('date'):
+        caseData.append(item.cases_c)
+        deathData.append(item.deaths_c)
+        labelData.append(str(item.date))
+    context = {
+        "all_states" : State.objects.all().order_by("fips"),
+        "labels" : labelData,
+        "caseData" : caseData,
+        "deathData" : deathData,
+    }
+    return render(request, "NYT_single_variable_over_time.html", context)
+
 def compare_daily_cases(request):
     caseData = []
     deathData = []

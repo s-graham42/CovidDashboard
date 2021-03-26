@@ -11,6 +11,8 @@ urlpatterns = [
     path('dashboard_admin/upload_success', views.upload_success),
     path('dashboard_admin/db_load_csv/<int:id>', views.db_load_csv),
     path('dashboard_admin/db_load_success/<int:row_count>', views.db_load_sucess),
+    path('apiData', views.apiData),
+    path('apiData/newYorkTimes/singleVariable', views.nyt_svot),
     path('compare/daily_cases', views.compare_daily_cases),
     path('compare/singleVariable', views.compare_single_variable),
     path('charts/oneStateDailyCases', views.oneStateDailyCases, name="oneStateDailyCases"),
