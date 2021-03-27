@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="main-nav">
-        <div class="row p-4">
+        <div class="row p-3">
             <div>
                 <h1 class="text-center text-white text-shadow-grey">GhostDucky's Covid-19 Dashboard</h1>
             </div>
@@ -17,24 +17,24 @@
                 <h5 class="text-center text-white text-shadow-grey">Visualizing U.S. Covid-19 Data</h5>
             </div>
         </div>
-        <nav class="row my-auto p-3 justify-content-center">
+        <nav class="row my-auto p-2 justify-content-center">
                 <div class="col-2">
                     <a class="btn btn-primary shadow-lg text-shadow-sm w-100" href="/" role="button">Home</a>
                 </div>
                 <div class="col-2">
-                    <a class="btn btn-info text-white shadow-lg text-shadow-sm w-100" href="/" role="button">Covid-19 Information</a>
+                    <a class="btn btn-info text-white shadow-lg text-shadow-sm w-100" href="/covidInformation" role="button">Covid-19 Information</a>
                 </div>
                 <div class="col-2">
-                    <a class="btn btn-info text-white shadow-lg text-shadow-sm w-100" href="/" role="button">Vaccine Information</a>
+                    <a class="btn btn-info text-white shadow-lg text-shadow-sm w-100" href="/vaccines" role="button">Vaccine Information</a>
                 </div>
                 <div class="col-2">
-                    <a class="btn btn-primary shadow-lg text-shadow-sm w-100" href="/admin" role="button">[ Admin ]</a>
+                    <a class="btn btn-primary shadow-lg text-shadow-sm w-100" href="/dashboard_admin" role="button">Admin</a>
                 </div>
         </nav>
 
                                             <!--    Drop Down Menus    -->
 
-        <nav class="row my-auto p-4 justify-content-center">
+        <nav class="row my-auto p-2 justify-content-center">
             <div class="col-2 mx-2">
                 <h5 class="text-center text-white text-shadow-grey">Visualization DataSets:</h5>
             </div>
@@ -65,7 +65,7 @@
                     New York Times
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="/compare/singleVariable">Single Variable Over Time</a></li>
+                    <li><a class="dropdown-item" href="/apiData/newYorkTimes/singleVariable">Single Variable Over Time</a></li>
                     <li><a class="dropdown-item" href="#">Fatality Rates</a></li>
                     <li><a class="dropdown-item" href="#">Multiple Variables</a></li>
                     <li><a class="dropdown-item" href="#">Predictive Curves</a></li>
