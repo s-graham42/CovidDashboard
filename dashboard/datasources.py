@@ -64,10 +64,22 @@ class NewYorkTimesData:
     def get_state_by_date_range(self, fips, start, end, column):
         this_state = State.objects.get(fips=fips)
         this_data = self.df.loc[(self.df["date"] >= start) & (self.df["date"] <= end) & (self.df["fips"] == fips), ["date", column]].sort_values(by=['date'])
-        this_xy = list(this_data.to_records(index=False))
+        this_xy = list(this_data.itertuples(index=False, name=None))
+        
         # return dictionary state:state name, dates:list of dates, data:requested dataset 
-        return {"state": this_state.name, "data": this_xy}
+        return {"state": this_state.name, "data": list(this_xy)}
 
+    def get_column(self, interval, datapoint):
+        if (interval == "cumulative" and datapoint == "cases"):
+            return "cases"
+        elif (interval == "cumulative" and datapoint == "deaths"):
+            return "deaths"
+        elif (interval == "daily" and datapoint == "cases"):
+            return "cases_d"
+        elif (interval == "daily" and datapoint == "deaths"):
+            return "deaths_d"
+        else:
+            raise ValueError("Valid values are only 'cumulative' or 'daily', and 'cases' or 'deaths'.")
 
 
     #  FUTURE FUNCTIONALITY - STORE API-PULLED DATA AS A CSV FILE / DOESN'T WORK YET

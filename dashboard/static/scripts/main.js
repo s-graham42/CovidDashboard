@@ -19,10 +19,10 @@ var FourStatesDCChart = new Chart (lineCtx4sDC, {
                 type: 'line',
                 data: {},
                 options: {
-                    title : {
-                        display : true,
-                        position : 'top',
-                        text : "4 States Daily Cases" },
+                    title: {
+                        display: true,
+                        position: 'bottom',
+                        text: '4 States Daily Cases' },
                     scales: {
                         xAxes: [{
                             type: 'time', 

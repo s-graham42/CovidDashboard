@@ -219,57 +219,26 @@ def fourStatesDailyCases(request):
             'state_4_name': state_4.name,
             'state_4_data': state_4_data})
 
-def get_column(interval, datapoint):
-    if (interval == "cumulative" and datapoint == "cases"):
-        return "cases"
-    elif (interval == "cumulative" and datapoint == "deaths"):
-        return "deaths"
-    elif (interval == "daily" and datapoint == "cases"):
-        return "cases_d"
-    elif (interval == "daily" and datapoint == "deaths"):
-        return "deaths_d"
-    else:
-        raise ValueError("Valid values are only 'cumulative' or 'daily', and 'cases' or 'deaths'.")
 
 def singleVariableOverTime(request):
     if request.method == "POST":
-        # labels = []
-        state_1_data = []
-        state_2_data = []
-        state_3_data = []
-        state_4_data = []
-        state_1 = State.objects.get(fips=request.POST['state_1'])
-        state_2 = State.objects.get(fips=request.POST['state_2'])
-        state_3 = State.objects.get(fips=request.POST['state_3'])
-        state_4 = State.objects.get(fips=request.POST['state_4'])
+        column = nyt_data.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'])
+        start = request.POST['start_date']
+        end = request.POST['end_date']
 
-        state_1_qs = Entry.objects.filter(state=state_1).order_by('date')
-        for entry in state_1_qs:
-            s1date = datetime.datetime.strftime(entry.date, "%m/%d/%Y")
-            state_1_data.append([s1date, entry.cases_d])
-
-        state_2_qs = Entry.objects.filter(state=state_2).order_by('date')
-        for entry in state_2_qs:
-            s2date = datetime.datetime.strftime(entry.date, "%m/%d/%Y")
-            state_2_data.append([s2date, entry.cases_d])
-
-        state_3_qs = Entry.objects.filter(state=state_3).order_by('date')
-        for entry in state_3_qs:
-            s3date = datetime.datetime.strftime(entry.date, "%m/%d/%Y")
-            state_3_data.append([s3date, entry.cases_d])
-
-        state_4_qs = Entry.objects.filter(state=state_4).order_by('date')
-        for entry in state_4_qs:
-            s4date = datetime.datetime.strftime(entry.date, "%m/%d/%Y")
-            state_4_data.append([s4date, entry.cases_d])
+        state_1 = nyt_data.get_state_by_date_range(int(request.POST['state_1']), start, end, column)
+        state_2 = nyt_data.get_state_by_date_range(int(request.POST['state_2']), start, end, column)
+        state_3 = nyt_data.get_state_by_date_range(int(request.POST['state_3']), start, end, column)
+        state_4 = nyt_data.get_state_by_date_range(int(request.POST['state_4']), start, end, column)
+        # returns dictionary {'state': state name, 'data': list of tuples [(date, datapoint), (...] }
         
-        return JsonResponse(data={  #'labels': labels,
-            'state_1_name': state_1.name,
-            'state_1_data': state_1_data,
-            'state_2_name': state_2.name,
-            'state_2_data': state_2_data,
-            'state_3_name': state_3.name,
-            'state_3_data': state_3_data,
-            'state_4_name': state_4.name,
-            'state_4_data': state_4_data})
+        return JsonResponse(data={
+            'state_1_name': state_1['state'],
+            'state_1_data': state_1['data'],
+            'state_2_name': state_2['state'],
+            'state_2_data': state_2['data'],
+            'state_3_name': state_3['state'],
+            'state_3_data': state_3['data'],
+            'state_4_name': state_4['state'],
+            'state_4_data': state_4['data']})
 
