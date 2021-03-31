@@ -1,7 +1,9 @@
 # API Datasource Objects
 import datetime
+import os
 import pandas as pd
 from .models import CsvFile, State
+from covid_project.settings import BASE_DIR
 
 
 # """
@@ -20,7 +22,7 @@ class DataSourceCSV:
         self.source = name
         self.source_url = url
         self.date = datetime.date.today()
-        self.df = self.get_new_from_api()   # generates a new dataframe from a fresh api pull.
+        self.df = self.get_new_dataframe()   # generates a new dataframe from a fresh api pull.
 
     def __str__(self):
         return f"{self.source} api data ({self.date})"
@@ -38,10 +40,10 @@ class DataSourceCSV:
         return self.df
 
     def update_df(self):
-        self.df = self.get_new_from_api()
+        self.df = self.get_new_dataframe()
 
         # basic pull and read - does no transformations on data.
-    def get_new_from_api(self):
+    def get_new_dataframe(self):
         api_df = pd.read_csv(self.source_url, parse_dates=True)
 
         return api_df
@@ -61,34 +63,55 @@ class NewYorkTimesData(DataSourceCSV):
     def __init__(self):
         self.source = "New York Times"  # string
         self.source_url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv"
+        self.source_file = BASE_DIR + "/media/current_api_data/us-states_githubrepo_NYT_1.csv"
         self.date = datetime.date.today()
-        self.df = self.get_new_from_api()
+        self.df = self.get_new_dataframe()
 
-    def get_new_from_api(self):
-                    # Get new csv file from NYTimes Github page
-        api_file = pd.read_csv(self.source_url, parse_dates=True)
+        # Check if the source file of cleaned data is from today.
+    def file_is_from_today(self):
+        file_date = datetime.datetime.fromtimestamp(os.path.getmtime(self.source_file)).strftime("%Y-%m-%d")
+        today = datetime.datetime.now().strftime('%Y-%m-%d')
+        if today == file_date:
+            return True
+        else:
+            return False
+
+        # We always want the most recent data.  Checks if the file we have is from today.
+        # If so, get dataframe from that.  If not, run R script to pull and process API
+        # data into csv and then use that to get a dataframe.
+    def get_new_dataframe(self):
+        if self.file_is_from_today():
+            return pd.read_csv(self.source_file, parse_dates=True)
+        else:
+            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/Get_us-states_githubrepo_NYT.R")
+            return pd.read_csv(self.source_file, parse_dates=True)
+
+    # deprecated
+    # def get_new_from_api(self):
+    #                 # Get new csv file from NYTimes Github page
+    #     api_file = pd.read_csv(self.source_url, parse_dates=True)
         
-        max_fips = max(api_file['fips'])
-        new_frame = pd.DataFrame()
-                    # Calculate Daily Cases and Deaths
-        for i in range(1, max_fips + 1):        
-            this_state = api_file[api_file['fips'] == i].sort_values(by=['date'])
-            if len(this_state) == 0:
-                continue
-            else:
-                this_state['cases_d'] = this_state['cases'].diff()
-                this_state['deaths_d'] = this_state['deaths'].diff()
-                    # after .diif(), first item in new series is NaN.  Assign value from cumulative data to that item.
-                this_state.loc[this_state.index[0], 'cases_d'] = this_state.loc[this_state.index[0], 'cases']
-                this_state.loc[this_state.index[0], 'deaths_d'] = this_state.loc[this_state.index[0], 'deaths']
+    #     max_fips = max(api_file['fips'])
+    #     new_frame = pd.DataFrame()
+    #                 # Calculate Daily Cases and Deaths
+    #     for i in range(1, max_fips + 1):        
+    #         this_state = api_file[api_file['fips'] == i].sort_values(by=['date'])
+    #         if len(this_state) == 0:
+    #             continue
+    #         else:
+    #             this_state['cases_d'] = this_state['cases'].diff()
+    #             this_state['deaths_d'] = this_state['deaths'].diff()
+    #                 # after .diif(), first item in new series is NaN.  Assign value from cumulative data to that item.
+    #             this_state.loc[this_state.index[0], 'cases_d'] = this_state.loc[this_state.index[0], 'cases']
+    #             this_state.loc[this_state.index[0], 'deaths_d'] = this_state.loc[this_state.index[0], 'deaths']
 
-                    # append each state in turn to new Data Frame
-                new_frame = new_frame.append(this_state, ignore_index = True)
+    #                 # append each state in turn to new Data Frame
+    #             new_frame = new_frame.append(this_state, ignore_index = True)
 
-                    # cast calculated columns from float64 to int32
-        new_frame = new_frame.astype({'cases_d': 'int32', 'deaths_d': 'int32'})
+    #                 # cast calculated columns from float64 to int32
+    #     new_frame = new_frame.astype({'cases_d': 'int32', 'deaths_d': 'int32'})
 
-        return new_frame
+    #     return new_frame
 
                     # get all 'column' entries for a particular state (by fips number)
     def get_all_by_state(self, fips, column):
@@ -120,19 +143,6 @@ class NewYorkTimesData(DataSourceCSV):
             raise ValueError("Valid values are only 'cumulative' or 'daily', and 'cases' or 'deaths'.")
 
 
-    #  FUTURE FUNCTIONALITY - STORE API-PULLED DATA AS A CSV FILE IN DATABASE / DOESN'T WORK YET
-        # write dataframe to csv file
-        # store as a CsvFile object
-        # return CsvFile object
-
-    # def store_dataframe_as_CSVFile(self, dataframe):
-    #     today = datetime.date.today().strftime("%Y-%m-%d")
-    #     new_name = (f"New_York_Times-{today}")
-    #     new_desc = (f"Pulled from New York Times github on {today}")
-    #     new_file = dataframe.to_csv(f"./NYT-{today}.csv")
-    #     new_CsvFile = CsvFile.objects.create(name=new_name, description=new_desc, file=new_file)
-    #     return new_CsvFile
-
 # """
  
 #   dP""b8 8888b.   dP""b8     8888b.     db    888888    db    .dP"Y8  dP"Yb  88   88 88""Yb  dP""b8 888888 
@@ -148,5 +158,5 @@ class CDCData(DataSourceCSV):
         self.source = "CDC"  # string
         self.source_url = "https://data.cdc.gov/resource/9mfq-cb36.csv"
         self.date = datetime.date.today()
-        self.df = self.get_new_from_api()   # generates a new dataframe from a fresh api pull.
+        self.df = self.get_new_dataframe()   # generates a new dataframe from a fresh api pull.
     
