@@ -63,7 +63,7 @@ class NewYorkTimesStateData(DataSourceCSV):
     def __init__(self):
         self.source = "New York Times"  # string
         self.source_url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv"
-        self.source_file = BASE_DIR + "/media/current_api_data/us-states_githubrepo_NYT_1.csv"
+        self.source_file = BASE_DIR + "/media/current_api_data/NYTStates.csv"
         self.date = datetime.date.today()
         self.df = self.get_new_dataframe()
 
@@ -83,7 +83,7 @@ class NewYorkTimesStateData(DataSourceCSV):
         if self.file_is_from_today():
             return pd.read_csv(self.source_file, parse_dates=True)
         else:
-            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/Get_us-states_githubrepo_NYT.R")
+            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/Cumu_To_ Daily_NYT.R")
             return pd.read_csv(self.source_file, parse_dates=True)
 
     # deprecated
@@ -132,13 +132,13 @@ class NewYorkTimesStateData(DataSourceCSV):
 
     def get_column(self, interval, datapoint):
         if (interval == "cumulative" and datapoint == "cases"):
-            return "cases"
+            return "cumu_cases"
         elif (interval == "cumulative" and datapoint == "deaths"):
-            return "deaths"
+            return "cumu_deaths"
         elif (interval == "daily" and datapoint == "cases"):
-            return "cases_d"
+            return "daily_cases"
         elif (interval == "daily" and datapoint == "deaths"):
-            return "deaths_d"
+            return "daily_deaths"
         else:
             raise ValueError("Valid values are only 'cumulative' or 'daily', and 'cases' or 'deaths'.")
 
