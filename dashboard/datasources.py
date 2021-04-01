@@ -58,7 +58,7 @@ class DataSourceCSV:
  
 # """
 
-class NewYorkTimesData(DataSourceCSV):
+class NewYorkTimesStateData(DataSourceCSV):
     
     def __init__(self):
         self.source = "New York Times"  # string

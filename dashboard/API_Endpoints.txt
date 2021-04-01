@@ -4,4 +4,5 @@ Janssen Vaccine Allocations by Jurisdiction: https://data.cdc.gov/resource/w9zu-
 
 US Cases and Deaths by state over time:  https://data.cdc.gov/resource/9mfq-cb36.csv
 
+NYT US Cases and Death totals over time: https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv
 NYT US Cases and Deaths by state over time: https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv
