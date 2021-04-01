@@ -69,12 +69,12 @@ class NewYorkTimesStateData(DataSourceCSV):
 
         # Check if the source file of cleaned data is from today.
     def file_is_from_today(self):
-        file_date = datetime.datetime.fromtimestamp(os.path.getmtime(self.source_file)).strftime("%Y-%m-%d")
-        today = datetime.datetime.now().strftime('%Y-%m-%d')
-        if today == file_date:
-            return True
-        else:
-            return False
+        if os.path.exists(self.source_file):
+            file_date = datetime.datetime.fromtimestamp(os.path.getmtime(self.source_file)).strftime("%Y-%m-%d")
+            today = datetime.datetime.now().strftime('%Y-%m-%d')
+            if today == file_date:
+                return True
+        return False
 
         # We always want the most recent data.  Checks if the file we have is from today.
         # If so, get dataframe from that.  If not, run R script to pull and process API
@@ -83,7 +83,7 @@ class NewYorkTimesStateData(DataSourceCSV):
         if self.file_is_from_today():
             return pd.read_csv(self.source_file, parse_dates=True)
         else:
-            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/Cumu_To_ Daily_NYT.R")
+            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/Cumu_To_Daily_NYT.R")
             return pd.read_csv(self.source_file, parse_dates=True)
 
     # deprecated
