@@ -1,7 +1,8 @@
 import os
+import pandas as pd
 
 os.getcwd()
-os.chdir('/Users/neo/Drive/Python/WuFlu Dashboard/WuFlu Sandbox/API Sandbox')
-os.system('Rscript Get_us-states_githubrepo_NYT.R')
-os.system('Rscript cumu_to_daily_deaths_NYT.R')
-os.system('Rscript cumu_to_daily_cases_NYT.R')
+os.chdir('C:\Users\toast\Documents\CodingDojo\python_stack\CovidDashboard\covid_project\csv_files')
+os.system('Rscript Cumu_To_Daily_NYT.R')
+
+NYT_data = pd.read_csv('NYT.csv')
