@@ -18,7 +18,7 @@ from .datasources import *
  
 # """
 
-nyt_data = NewYorkTimesData()
+nyt_data = NewYorkTimesStateData()
 print(nyt_data, " initailized.")
 
 # """

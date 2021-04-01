@@ -1,6 +1,6 @@
-install.packages('dplyer')
+install.packages('dplyr') #changed name from 'dplyer'
 install.packages('psych')
-install.packages('plyer')
+install.packages('plyr') # changed name from 'plyer'
 install.packages('jsonify')
 install.packages('jsonlite')
 install.packages('stringr')

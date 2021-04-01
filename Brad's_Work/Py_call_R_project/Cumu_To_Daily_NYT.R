@@ -1,5 +1,5 @@
 #--- Set working directory to a directory mutually understood with Python script
-setwd('C:\Users\toast\Documents\CodingDojo\python_stack\CovidDashboard\covid_project\csv_files')
+setwd('C:/Users/toast/Documents/CodingDojo/python_stack/CovidDashboard/covid_project/media/current_api_data')
 
 #--- Import States data from the NYT github repository into an R object
 init1=read.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv')
@@ -83,4 +83,4 @@ init1$daily_cases=init3$cases
 colnames(init1)[colnames(init1)=="deaths"]="cumu_deaths"
 colnames(init1)[colnames(init1)=="cases"]="cumu_cases"
 
-write.csv(init1,file='NYT.csv',row.names = FALSE)
+write.csv(init1,file='NYTStates.csv',row.names = FALSE)

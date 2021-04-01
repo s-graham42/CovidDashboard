@@ -1,3 +1,4 @@
+from covid_project.settings import BASE_DIR # may need this wherever we use these calls
 import os
 import pandas as pd
 
