@@ -1,3 +1,5 @@
+
+https://data.cdc.gov/browse?tags=covid-19 - main page
 Pfizer Vaccine Allocations by Jurisdiction:  https://data.cdc.gov/resource/saz5-9hgg.csv
 Moderna Vaccine Allocations by Jurisdiction: https://data.cdc.gov/resource/b7pe-5nws.csv
 Janssen Vaccine Allocations by Jurisdiction: https://data.cdc.gov/resource/w9zu-fywh.csv
@@ -6,3 +8,8 @@ US Cases and Deaths by state over time:  https://data.cdc.gov/resource/9mfq-cb36
 
 NYT US Cases and Death totals over time: https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv
 NYT US Cases and Deaths by state over time: https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv
+
+
+
+COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University:
+https://github.com/CSSEGISandData/COVID-19 - main page
