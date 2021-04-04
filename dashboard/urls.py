@@ -15,6 +15,7 @@ urlpatterns = [
     path('apiData/newYorkTimes/singleVariable', views.nyt_svot),
     path('compare/daily_cases', views.compare_daily_cases),
     path('compare/singleVariable', views.compare_single_variable),
+    path('charts/USTotals', views.usTotalsChart, name="usTotalsChart"),
     path('charts/oneStateDailyCases', views.oneStateDailyCases, name="oneStateDailyCases"),
     path('charts/fourStatesDailyCases', views.fourStatesDailyCases, name="fourStatesDailyCases"),
     path('charts/singleVariableOverTime', views.singleVariableOverTime, name="singleVariableOverTime"),

@@ -1,3 +1,5 @@
+setwd('C:/Users/toast/Documents/CodingDojo/python_stack/CovidDashboard/covid_project/media/current_api_data')
+
 #--- Import US data from the NYT github repository into an R object
 init1=read.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv')
 

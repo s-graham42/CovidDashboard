@@ -48,15 +48,68 @@ class DataSourceCSV:
 
         return api_df
 
+# """
+ 
+#  88b 88 Yb  dP 888888     8888b.     db    888888    db    .dP"Y8  dP"Yb  88   88 88""Yb  dP""b8 888888 .dP"Y8 
+#  88Yb88  YbdP    88        8I  Yb   dPYb     88     dPYb   `Ybo." dP   Yb 88   88 88__dP dP   `" 88__   `Ybo." 
+#  88 Y88   8P     88        8I  dY  dP__Yb    88    dP__Yb  o.`Y8b Yb   dP Y8   8P 88"Yb  Yb      88""   o.`Y8b 
+#  88  Y8  dP      88       8888Y"  dP""""Yb   88   dP""""Yb 8bodP'  YbodP  `YbodP' 88  Yb  YboodP 888888 8bodP' 
+ 
+# """
 
-# """
- 
-#  88b 88 Yb  dP 888888     8888b.     db    888888    db    .dP"Y8  dP"Yb  88   88 88""Yb  dP""b8 888888 
-#  88Yb88  YbdP    88        8I  Yb   dPYb     88     dPYb   `Ybo." dP   Yb 88   88 88__dP dP   `" 88__   
-#  88 Y88   8P     88        8I  dY  dP__Yb    88    dP__Yb  o.`Y8b Yb   dP Y8   8P 88"Yb  Yb      88""   
-#  88  Y8  dP      88       8888Y"  dP""""Yb   88   dP""""Yb 8bodP'  YbodP  `YbodP' 88  Yb  YboodP 888888 
- 
-# """
+class NewYorkTimesUSData(DataSourceCSV):
+    def __init__(self):
+        self.source = "New York Times"  # string
+        self.source_url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv"
+        self.source_file = BASE_DIR + "/media/current_api_data/NYT_US.csv"
+        self.date = datetime.date.today()
+        self.df = self.get_new_dataframe()
+
+    def __str__(self):
+        return f"{self.source} U.S. api data ({self.date})"
+
+    def file_is_from_today(self):
+        if os.path.exists(self.source_file):
+            file_date = datetime.datetime.fromtimestamp(os.path.getmtime(self.source_file)).strftime("%Y-%m-%d")
+            today = datetime.datetime.now().strftime('%Y-%m-%d')
+            if today == file_date:
+                return True
+        return False
+
+    def get_new_dataframe(self):
+        if self.file_is_from_today():
+            return pd.read_csv(self.source_file, parse_dates=True)
+        else:
+            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/NYT_US_data_processing.R")
+            return pd.read_csv(self.source_file, parse_dates=True).sort_values(by=['date'])
+
+    def get_current_cases(self):
+        return self.df.cumu_cases.iat[-1]
+
+    def get_current_deaths(self):
+        return self.df.cumu_deaths.iat[-1]
+
+    def get_column(self, interval, datapoint):
+        if (interval == "cumulative" and datapoint == "cases"):
+            return "cumu_cases"
+        elif (interval == "cumulative" and datapoint == "deaths"):
+            return "cumu_deaths"
+        elif (interval == "daily" and datapoint == "cases"):
+            return "daily_cases"
+        elif (interval == "daily" and datapoint == "deaths"):
+            return "daily_deaths"
+        else:
+            raise ValueError("Valid values are only 'cumulative' or 'daily', and 'cases' or 'deaths'.")
+
+    def get_by_date_range(self, start, end, column):
+                    # get the date and 'column' values by state and date range.
+        this_data = self.df.loc[(self.df["date"] >= start) & (self.df["date"] <= end), ["date", column]].sort_values(by=['date'])
+                    # chart generation needs a list of tuples in the format ('date', 'value')
+        this_xy = list(this_data.itertuples(index=False, name=None))
+                    # return list of date, value tuples
+        return this_xy
+
+
 
 class NewYorkTimesStateData(DataSourceCSV):
     
@@ -66,6 +119,9 @@ class NewYorkTimesStateData(DataSourceCSV):
         self.source_file = BASE_DIR + "/media/current_api_data/NYTStates.csv"
         self.date = datetime.date.today()
         self.df = self.get_new_dataframe()
+
+    def __str__(self):
+        return f"{self.source} State api data ({self.date})"
 
         # Check if the source file of cleaned data is from today.
     def file_is_from_today(self):
