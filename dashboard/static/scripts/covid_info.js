@@ -1,16 +1,13 @@
-console.log("Hello Dashboard")
-
-
 
 // Create Four States Daily Cases Chart
-var lineCtxSVOT = document.getElementById('singleVariableOTCanvas').getContext('2d');
-var singleVariableOTChart = new Chart (lineCtxSVOT, {
+var lineCtxUSTotals = document.getElementById('USTotalsCanvas').getContext('2d');
+var USTotalsChart = new Chart (lineCtxUSTotals, {
                 type: 'line',
                 data: {},
                 options: {
                     title: {
                         display: true,
-                        text: 'Daily Covid-19 Cases',
+                        text: 'U.S. Cumulative Covid-19 Cases',
                     },
                     scales: {
                         xAxes: [{
@@ -39,7 +36,7 @@ function arrayToXY(arr) {
 
 
 // ------------------  Line Chart ------------------------------------
-$("#singleVariableOTForm").submit(function(e) {
+$("#USTotalsForm").submit(function(e) {
     e.preventDefault();
     console.log("Got it!  Prevented Default!");
     var form = $(this);
@@ -52,43 +49,19 @@ $("#singleVariableOTForm").submit(function(e) {
             console.log(data);
             var newData = { 
                 datasets: [{
-                    label: data.state_1_name,
+                    label: data.data_name,
                     borderColor: 'rgb(13, 110, 253)',
                     borderWidth: 1,
                     lineTension: 0,
                     pointHoverRadius: 2,
                     pointRadius: 1,
-                    data: arrayToXY(data.state_1_data),
-                }, {
-                    label: data.state_2_name,
-                    borderColor: 'rgb(25,135, 84)',
-                    borderWidth: 1,
-                    lineTension: 0,
-                    pointHoverRadius: 2,
-                    pointRadius: 1,
-                    data: arrayToXY(data.state_2_data),
-                }, {
-                    label: data.state_3_name,
-                    borderColor: 'rgb(220,53, 69)',
-                    borderWidth: 1,
-                    lineTension: 0,
-                    pointHoverRadius: 2,
-                    pointRadius: 1,
-                    data: arrayToXY(data.state_3_data),
-                }, {
-                    label: data.state_4_name,
-                    borderColor: 'rgb(255,193, 7)',
-                    borderWidth: 1,
-                    lineTension: 0,
-                    pointHoverRadius: 2,
-                    pointRadius: 1,
-                    data: arrayToXY(data.state_4_data),
+                    data: arrayToXY(data.dataset),
                 }]
             };
 
-            singleVariableOTChart.data = newData;
-            singleVariableOTChart.options.title.text = data.title;
-            singleVariableOTChart.update();
+            USTotalsChart.data = newData;
+            USTotalsChart.options.title.text = data.title;
+            USTotalsChart.update();
         }
     });
 });

@@ -21,3 +21,29 @@
     background-size: cover;
     min-height: 300px;
 }
+.footer-block {
+    background-color: #1312127a;
+    border-radius:20px;
+}
+.bg-dk-grey {
+    background-color: #a5a3a375;
+}
+.project-logo {
+    display: inline-block;
+    max-width: 100px;
+}
+.decoration-none {
+    text-decoration: none;
+}
+.text-lt-grey {
+    color: #a4a4a5;
+}
+.sm-logo {
+    max-height: 20px;
+}
+.font-lt-bold {
+    font-weight: 600;
+}
+.font-very-bold {
+    font-weight: 900;
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covid Dashboard Main Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">    {% load static %}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/main_style.css' %}">
 </head>
 <body>
@@ -80,9 +81,47 @@
     {% endblock %}
 
                                         <!--    Footer    -->
-    <div class="container-fluid my-5">
-        <footer class="row bg-footer">
-            <h6 class="my-5 text-center text-white">Footer information will go here.</p>
+    <div class="container-fluid my-5 bg-footer">
+        <footer class="row">
+            <div class="col m-4 p-1 footer-block center-block text-center">
+                <h6 class="text-center text-white my-2"><u>Project Technologies:</u></h6>
+                <div class="my-3 rounded bg-dk-grey">
+                    <a href="https://www.python.org/" title="Python.org"><img class="m-1 project-logo" src="{% static '/images/logos/python_logo.png' %}" alt="Python Logo"></a>
+                    <a href="https://www.djangoproject.com/" title="djangoproject.org"><img class="m-1 project-logo" src="{% static '/images/logos/django_logo.png' %}" alt="Django Logo"></a>
+                    <a href="https://www.chartjs.org/" title="chartsjs.org"><img class="m-1 project-logo" src="{% static '/images/logos/chartjs_logo.png' %}" alt="Charts.js Logo"></a>
+                    <a href="https://getbootstrap.com/" title="getbootstrap.com"><img class="m-1 project-logo" src="{% static '/images/logos/boostrap_logo.png' %}" alt="Bootstrap Logo"></a>
+                    <a href="https://www.r-project.org/" title="r-project.org"><img class="m-1 project-logo" style="max-height: 40px;" src="{% static '/images/logos/Rlogo.png' %}" alt="R Logo"></a>
+                    <a href="https://pandas.pydata.org/" title="pandas.pydata.org"><img class="m-1 project-logo" src="{% static '/images/logos/pandas_logo.png' %}" alt="Pandas Logo"></a>
+                    <a href="https://jquery.com/" title="jquery.com"><img class="m-1 project-logo" src="{% static '/images/logos/jquery_logo.png' %}" alt="jquery Logo"></a>
+                    <a href="https://www.sqlite.org/" title="sqlite.org"><img class="m-1 project-logo" style="max-height: 40px;" src="{% static '/images/logos/sqlite_logo.png' %}" alt="SQLite Logo"></a>
+                </div>
+            </div>
+            <div class="col m-4 p-2 footer-block center-block text-center">
+                <h6 class="text-center text-white my-2"><u>Data Sources:</u></h6>
+                <div class="list-group my-3 text-shadow-sm">
+                    <a class="list-group-item link-light bg-dk-grey" href="https://data.cdc.gov/browse?tags=covid-19">CDC Public Covid-19 Data</a>
+                    <a class="list-group-item link-light bg-dk-grey" href="https://github.com/nytimes/covid-19-data">New York Times U.S. Coronavirus Data</a>
+                    <a class="list-group-item link-light bg-dk-grey" href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins University CCSE</a>
+                </div>
+                <a class="list-group-item bg-dk-grey link-light text-shadow-sm" href="https://github.com/s-graham42/CovidDashboard"><img class="m-1 project-logo" src="{% static '/images/logos/github_logo.png' %}" style="max-height: 32px;" alt="Github Logo"> Github For This App</a>
+            </div>
+            <div class="col m-4 p-2 footer-block center-block text-center">
+                <h6 class="text-center text-white my-2"><u>Developers:</u></h6>
+                <div class="my-3 p-1 bg-dk-grey rounded text-shadow-sm">
+                    <p class="text-lt-grey mb-1 mt-3">Django App Development:</p>
+                    <a class="link-light decoration-none" href="">Stephen A. Graham</a>
+                    <a href="https://www.linkedin.com/in/stephen-a-graham/" title="Stephen Graham LinkedIn"><img class="sm-logo" src="{% static '/images/logos/linkedin_logo.png' %}" alt="LinkedIn Logo"></a>
+                    <a href="https://github.com/s-graham42/" title="Stephen Graham Github"><img class="sm-logo" src="{% static '/images/logos/github_logo.png' %}" alt="GitHub Logo"></a>
+                    <p class="text-lt-grey mb-1 mt-3">Data Analysis and R Development:</p>
+                    <a class="link-light decoration-none" href="">Bradford Howe</a>
+                    <a href="https://www.linkedin.com/in/bradford-howe-435290192/" title="Bradford Howe LinkedIn"><img class="sm-logo" src="{% static '/images/logos/linkedin_logo.png' %}" alt="LinkedIn Logo"></a>
+                    <a href="https://github.com/Bradford-Howe" title="Bradford Howe Github"><img class="sm-logo" src="{% static '/images/logos/github_logo.png' %}" alt="GitHub Logo"></a>
+                    <p class="text-lt-grey mb-1 mt-3">Techical Project Management:</p>
+                    <a class="link-light decoration-none" href="">Andrew Wei</a>
+                    <a href="/" title="Stephen Graham LinkedIn"><img class="sm-logo" src="{% static '/images/logos/linkedin_logo.png' %}" alt="LinkedIn Logo"></a>
+                    <a href="/" title="Stephen Graham Github"><img class="sm-logo" src="{% static '/images/logos/github_logo.png' %}" alt="GitHub Logo"></a>
+                </div>
+            </div>
         </footer>
     </div>
 </body>
