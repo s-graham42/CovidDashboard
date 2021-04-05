@@ -5,6 +5,10 @@ var USTotalsChart = new Chart (lineCtxUSTotals, {
                 type: 'line',
                 data: {},
                 options: {
+                    title: {
+                        display: true,
+                        text: 'U.S. Cumulative Covid-19 Cases',
+                    },
                     scales: {
                         xAxes: [{
                             type: 'time', 
@@ -56,6 +60,7 @@ $("#USTotalsForm").submit(function(e) {
             };
 
             USTotalsChart.data = newData;
+            USTotalsChart.options.title.text = data.title;
             USTotalsChart.update();
         }
     });

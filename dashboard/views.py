@@ -66,8 +66,11 @@ def apiData(request):
 # """
 
 def nyt_svot(request):
+    current_date = nyt_state_data.get_date().strftime('%Y-%m-%d')
     context = {
         "all_states" : State.objects.all().order_by("fips"),
+        "current_date": current_date,
+        
     }
     return render(request, "NYT_single_variable_over_time.html", context)
 
@@ -180,11 +183,13 @@ def usTotalsChart(request):
         end = request.POST['end_date']
         column = nyt_us_data.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'])
 
-        this_data_name = "U.S. " + request.POST['cumulative_daily'].capitalize() + " " + request.POST['cases_deaths'].capitalize()
+        title = (f"U.S. {request.POST['cumulative_daily'].capitalize()} Covid-19 {request.POST['cases_deaths'].capitalize()} from {start} to {end}.")
+        this_data_name = (f"U.S. {request.POST['cumulative_daily'].capitalize()} {request.POST['cases_deaths'].capitalize()}")
         this_dataset = nyt_us_data.get_by_date_range(start, end, column)
         # returns list of tuples [(date, datapoint), (...] }
         
         return JsonResponse(data={
+            'title': title,
             'data_name': this_data_name,
             'dataset': this_dataset})
 
@@ -194,6 +199,7 @@ def singleVariableOverTime(request):
         column = nyt_state_data.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'])
         start = request.POST['start_date']
         end = request.POST['end_date']
+        title = (f"{request.POST['cumulative_daily'].capitalize()} Covid-19 {request.POST['cases_deaths'].capitalize()} from {start} to {end}.")
 
         state_1 = nyt_state_data.get_state_by_date_range(int(request.POST['state_1']), start, end, column)
         state_2 = nyt_state_data.get_state_by_date_range(int(request.POST['state_2']), start, end, column)
@@ -202,6 +208,7 @@ def singleVariableOverTime(request):
         # returns dictionary {'state': state name, 'data': list of tuples [(date, datapoint), (...] }
         
         return JsonResponse(data={
+            'title': title,
             'state_1_name': state_1['state'],
             'state_1_data': state_1['data'],
             'state_2_name': state_2['state'],

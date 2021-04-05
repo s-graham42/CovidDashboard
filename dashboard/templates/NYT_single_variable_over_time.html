@@ -7,12 +7,20 @@
     <div class="container-md mx-auto">
 
         <!-- **************  LINE CHART ***************** -->
-        <div class="row my-3">
-            <h4 class="text-center border-dark">Single Variable Over Time</h4>
+        <div class="row my-2 justify-content-center">
+            <div class="col-2">
+                <a href="https://github.com/nytimes/covid-19-data" title="NYT Covid-19 Github"><img src="{% static '/images/logos/new_york_times_logo.png' %}" style="max-width: 80px; margin-left: 100%;" alt="New York Times Logo"></a>
+            </div>
+            <div class="col-8">
+                <h4 class="text-center">Single Variable Over Time</h4>
+            </div>
+            <div class="col-2">
+            </div>
         </div>
+        
         <div class="row">
             <div class="col-8 mx-auto">
-                <canvas class="my-3" id="singleVariableOTCanvas"></canvas>
+                <canvas class="my-1" id="singleVariableOTCanvas"></canvas>
             </div>
         </div>
         <!--    Data Manipulation Form    -->
@@ -20,32 +28,36 @@
             {% csrf_token %}
             <div class="row">
                 <!--  X/Y Axis selector  -->
-                <div class="col-md-3">
-                    <h6 class="my-3">Y Axis Data:</h6>
-                    <div class="form-group col-md-6 d-inline-block">
-                        <select class="form-control" name="cumulative_daily" id="cumulative_daily_select">
-                            <option value="daily" selected>Daily</option>
-                            <option value="cumulative">Cumulative</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-5 d-inline-block">
-                        <select class="form-control" name="cases_deaths" id="cases_deaths_select">
-                                <option value="cases" selected>Cases</option>
-                                <option value="deaths">Deaths</option>
-                        </select>
+                <div class="col-5">
+                    <h6 class="my-3">Select Y Axis Data:</h6>
+                    <div class="row justify-content-evenly">
+                        <div class="form-group col-5 d-inline-block">
+                            <select class="form-control" name="cumulative_daily" id="cumulative_daily_select">
+                                <option value="daily" selected>Daily</option>
+                                <option value="cumulative">Cumulative</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-5 d-inline-block">
+                            <select class="form-control" name="cases_deaths" id="cases_deaths_select">
+                                    <option value="cases" selected>Cases</option>
+                                    <option value="deaths">Deaths</option>
+                            </select>
+                        </div>
                     </div>
                     
-                    <h6 class="my-3">X Axis Data:  Date Range</h6>
-                    <div class="form-group col-md-8 d-inline-block">
-                        Start: <input class="form-control" type="date" name="start_date" id="start_date" value="2020-01-01">
-                    </div>
-                    <div class="form-group col-md-8 d-inline-block">
-                        End: <input class="form-control" type="date" name="end_date" id="end_date" value="2021-03-01">
+                    <h6 class="my-3">Select X Axis Data:  Date Range</h6>
+                    <div class="row justify-content-evenly">
+                        <div class="form-group col-5 d-inline-block">
+                            Start: <input class="form-control" type="date" name="start_date" id="start_date" value="2020-01-01">
+                        </div>
+                        <div class="form-group col-5 d-inline-block">
+                            End: <input class="form-control" type="date" name="end_date" id="end_date" value="{{ current_date }}">
+                        </div>
                     </div>
                 </div>
 
                 <!--  State / Territory Selector -->
-                <div class="col-md-3">    
+                <div class="col-5">    
                     <h5 class="text-center my-2">Select States / Territories</h4>
                     <div class="row my-2">
                         <div class="col-md-4 bg-primary d-inline-block border rounded text-center text-white"><small>State 1</small></div>
@@ -105,10 +117,9 @@
                     </div>
                 </div>
 
-
-                <div class="col-md-3 blue-finder">blah</div>
-                <div class="col-md-3 blue-finder">blah</div>
-                <button id="singleVariableOTSubmit" class="btn btn-sm btn-info border rounded text-white my-3" type="submit">Submit</button>
+                <div class="col-2 p-3 align-self-center">
+                    <button id="singleVariableOTSubmit" class="btn btn-info border rounded text-white my-3" type="submit">Submit</button>
+                </div>
             </div>
         </form>
     </div>

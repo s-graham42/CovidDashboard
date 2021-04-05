@@ -8,6 +8,10 @@ var singleVariableOTChart = new Chart (lineCtxSVOT, {
                 type: 'line',
                 data: {},
                 options: {
+                    title: {
+                        display: true,
+                        text: 'Daily Covid-19 Cases',
+                    },
                     scales: {
                         xAxes: [{
                             type: 'time', 
@@ -83,6 +87,7 @@ $("#singleVariableOTForm").submit(function(e) {
             };
 
             singleVariableOTChart.data = newData;
+            singleVariableOTChart.options.title.text = data.title;
             singleVariableOTChart.update();
         }
     });
