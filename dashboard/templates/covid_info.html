@@ -4,131 +4,155 @@
 {% load static %}
 
     <div class="container-md mx-auto">
+        <h3 class="m-4 text-center">General Covid-19 Information</h3>
         <div class="my-3 row justify-content-around">
             <div class="col-5 mx-auto">
-                <h4 class="p-2 text-center bg-primary rounded">U.S. Total Cases:  <span class="text-danger">{{ current_cases }}</span></h3>
+                <h4 class="p-2 text-center bg-dk-grey rounded">U.S. Total Cases:  <span class="text-danger">{{ current_cases }}</span></h3>
             </div>
             <div class="col-5 mx-auto">
-                <h4 class="p-2 text-center bg-primary rounded">U.S. Total Deaths:  <span class="text-danger">{{ current_deaths }}</span></h3>
+                <h4 class="p-2 text-center bg-dk-grey rounded">U.S. Total Deaths:  <span class="text-danger">{{ current_deaths }}</span></h3>
             </div>
         </div>
         
-        
-        
-        
-        <!-- **************  LINE CHART ***************** -->
         <div class="row my-1">
-            <h4 class="text-center border-dark">U.S. Covid-19 Data</h4>
-        </div>
-        <div class="row">
-            <div class="col-8 mx-auto">
-                <canvas class="my-1" id="USTotalsCanvas"></canvas>
+            <div class="col-8">
+                <!-- **************  LINE CHART ***************** -->
+                <div class="my-1">
+                    <h4 class="text-center border-dark">U.S. Covid-19 Data - View Cumulative or Daily Increases:</h4>
+                </div>
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <canvas class="my-1" id="USTotalsCanvas"></canvas>
+                    </div>
+                </div>
+                <!--    Data Manipulation Form    -->
+                <form class="col mx-auto p-3 border border-secondary rounded" id="USTotalsForm" action="/charts/USTotals" method="POST">
+                    {% csrf_token %}
+                    <div class="row justify-content-center">
+                        <!--  X/Y Axis selector  -->
+                        <div class="col-5 ">
+                            <h6 class="m-1">Select Y Axis Data:</h6>
+                            <div class="m-1 form-group d-inline-block">
+                                <select class="form-control" name="cumulative_daily" id="cumulative_daily_select">
+                                    <option value="cumulative" selected>Cumulative</option>
+                                    <option value="daily">Daily</option>
+                                </select>
+                            </div>
+                            <div class="m-1 form-group d-inline-block">
+                                <select class="form-control" name="cases_deaths" id="cases_deaths_select">
+                                        <option value="cases" selected>Cases</option>
+                                        <option value="deaths">Deaths</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <h6 class="my-1">Select X Axis Data:  Date Range</h6>
+                            <div class="form-group d-inline-block">
+                                Start: <input class="form-control" type="date" name="start_date" id="start_date" value="2020-01-01">
+                            </div>
+                            <div class="form-group d-inline-block">
+                                End: <input class="form-control" type="date" name="end_date" id="end_date" value="{{ current_date }}">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button id="USTotalsSubmit" class="btn btn-info border rounded text-white  mt-4 mx-auto" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <h5 class="text-center bg-dk-grey rounded my-4 p-2">Covid-19 Symptoms</h5>
+                <p class="p-2">COVID-19 affects different people in different ways. Infected people have had a wide range of symptoms reported – from mild symptoms to severe illness.  Symptoms may appear 2-14 days after exposure to the virus. <span class="font-lt-bold">People with these symptoms may have COVID-19:</span></p>
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="px-5">
+                            <li>Fever or chills</li>
+                            <li>Cough</li>
+                            <li>Shortness of breath or difficulty breathing</li>
+                            <li>Fatigue</li>
+                            <li>Muscle or body aches</li>
+                            <li>Headache</li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="px-5">
+                            <li>New loss of taste or smell</li>
+                            <li>Sore throat</li>
+                            <li>Congestion or runny nose</li>
+                            <li>Nausea or vomiting</li>
+                            <li>Diarrhea</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <p>Look for emergency warning signs for COVID-19. <span class="font-lt-bold">If someone is showing any of these signs, seek emergency medical care immediately:</span></p>
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="px-5">
+                            <li>Trouble breathing</li>
+                            <li>Persistent pain or pressure in the chest</li>
+                            <li>New confusion</li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="px-5">
+                            <li>Inability to wake or stay awake</li>
+                            <li>Pale, gray, or blue-colored skin, lips, or nail beds, depending on skin tone</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <p class="mt-5 text-center font-lt-bold">Call your medical provider for any other symptoms that are severe or concerning to you.</p>
+                <a class="d-block btn btn-info" href="https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html">Learn more on cdc.gov</a>
+                <p class="mt-5 text-center font-lt-bold">For informational purposes only. Consult your local medical authority for advice.</p>
+                <a class="d-block btn btn-primary" href="https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/coronavirus-self-checker.html">CDC Covid-19 Symptom Self-Checker</a>
+                <p class="mt-5 text-center font-lt-bold">Learn about how Covid-19 Spreads</p>
+                <a class="d-block btn btn-info" href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/how-covid-spreads.html">How Covid Spreads</a>
+                <hr class="my-5">
             </div>
-        </div>
-        <!--    Data Manipulation Form    -->
-        <form class="col mx-auto p-1 border border-secondary rounded" id="USTotalsForm" action="/charts/USTotals" method="POST">
-            {% csrf_token %}
-            <div class="row justify-content-center">
-                <!--  X/Y Axis selector  -->
-                <div class="col-3 ">
-                    <h6 class="my-1">Y Axis Data:</h6>
-                    <div class="form-group d-inline-block">
-                        <select class="form-control" name="cumulative_daily" id="cumulative_daily_select">
-                            <option value="cumulative" selected>Cumulative</option>
-                            <option value="daily">Daily</option>
-                        </select>
-                    </div>
-                    <div class="form-group d-inline-block">
-                        <select class="form-control" name="cases_deaths" id="cases_deaths_select">
-                                <option value="cases" selected>Cases</option>
-                                <option value="deaths">Deaths</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-5">
-                    <h6 class="my-1">X Axis Data:  Date Range</h6>
-                    <div class="form-group d-inline-block">
-                        Start: <input class="form-control" type="date" name="start_date" id="start_date" value="2020-01-01">
-                    </div>
-                    <div class="form-group d-inline-block">
-                        End: <input class="form-control" type="date" name="end_date" id="end_date" value="{{ current_date }}">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <button id="USTotalsSubmit" class="btn btn-info border rounded text-white my-3" type="submit">Submit</button>
-                </div>
-            </div>
-        </form>
 
-
-        <h1 class="m-3 text-center">General Covid-19 Information</h1>
+            <!--  Righthand Column  -->
+            <div class="col-4 my-3 p-5">
+                <a href="https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html"><img class="my-5" src="{% static '/images/CDC_symptoms_1200x1200.jpg' %}" style="max-width: 100%;" alt="CDC Covid-19 Symptoms Infographic"></a>
+                <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/index.html"><img class="my-5" src="{% static '/images/help_prevent_spread_1200x1200.jpg' %}" style="max-width: 100%;" alt="CDC Covid-19 'Help Prevent the Spread' Infographic"></a>
+                <a href="https://www.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/index.html"><img class="my-5" src="{% static '/images/stay_home_1200x1200.png' %}" style="max-width: 100%;" alt="CDC Stay Home When Sick Infographic"></a>
+                <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/index.html"><img class="my-5" src="{% static '/images/Clean_and_Disinfect_1200x1200.png' %}" style="max-width: 100%;" alt="CDC Clean and Disinfect Surfaces Infographic"></a>
+            </div>
+        </div>
+        
+        
         <div class="row">
-            <div class="col-7 mx-5 px-4">
-                <h3 class="text-center border border-secondary p-2">Covid-19 Symptoms</h3>
-                <p class="p-2">COVID-19 affects different people in different ways. Infected people have had a wide range of symptoms reported – from mild symptoms to severe illness.  Symptoms may appear 2-14 days after exposure to the virus. People with these symptoms may have COVID-19:</p>
-                <ul class="px-5">
-                    <li>Fever or chills</li>
-                    <li>Cough</li>
-                    <li>Shortness of breath or difficulty breathing</li>
-                    <li>Fatigue</li>
-                    <li>Muscle or body aches</li>
-                    <li>Headache</li>
-                    <li>New loss of taste or smell</li>
-                    <li>Sore throat</li>
-                    <li>Congestion or runny nose</li>
-                    <li>Nausea or vomiting</li>
-                    <li>Diarrhea</li>
-                </ul>
-                <p>Look for emergency warning signs for COVID-19. If someone is showing any of these signs, seek emergency medical care immediately:</p>
-                <ul>
-                    <li>Trouble breathing</li>
-                    <li>Persistent pain or pressure in the chest</li>
-                    <li>New confusion</li>
-                    <li>Inability to wake or stay awake</li>
-                    <li>Pale, gray, or blue-colored skin, lips, or nail beds, depending on skin tone</li>
-                </ul>
-                <p>Call your medical provider for any other symptoms that are severe or concerning to you.</p>
-                <a href="https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html">Learn more on cdc.gov</a>
-                <p>For informational purposes only. Consult your local medical authority for advice.</p>
-                <a href="https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/coronavirus-self-checker.html">CDC Covid-19 Symptom Self-Checker</a>
-            </div>
-            <div class="col-4">
-                <a href="https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html"><img src="{% static '/images/CDC_symptoms_1200x1200.jpg' %}" style="max-width: 100%;" alt="CDC Covid-19 Symptoms Infographic"></a>
+            <div class="col">
+                <h4 class="text-center bg-dk-grey rounded p-2">12 Symptoms that are <span class="font-very-bold">not</span> covid, but shouldn't be ignored</h4>
+                <p class="p-2 font-lt-bold">From <a href="https://www.ucsfhealth.org/education/12-non-covid-symptoms-you-shouldnt-ignore">UC San Fransisco Health Blog.</a>  If you experience any of these symptoms, call your medical provider:</p>
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="px-5">
+                            <li>Sudden discomfort in the chest, back or neck</li>
+                            <li>An abrupt change in behavior or function</li>
+                            <li>Light-headedness or fainting</li>
+                            <li>Sudden vision loss</li>
+                            <li>Severe headache</li>
+                            <li>Severe abdominal pain</li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="px-5">
+                            <li>Swelling in the face or mouth</li>
+                            <li>Severe vomiting or diarrhea</li>
+                            <li>Persistent fever</li>
+                            <li>Worsening rash</li>
+                            <li>Change in heartbeat</li>
+                            <li>Any new bleeding</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        
-        <div class="col-8">
-            <h3>12 Symptoms that are not covid, but shouldn't be ignored:</h3>
-            <p>From <a href="https://www.ucsfhealth.org/education/12-non-covid-symptoms-you-shouldnt-ignore">UC San Fransisco Health Blog.</a>  If you experience any of these symptoms, call your medical provider.</p>
-            <ol>
-                <li>Sudden discomfort in the chest, back or neck</li>
-                <li>An abrupt change in behavior or function</li>
-                <li>Light-headedness or fainting</li>
-                <li>Sudden vision loss</li>
-                <li>Severe headache</li>
-                <li>Severe abdominal pain</li>
-                <li>Swelling in the face or mouth</li>
-                <li>Severe vomiting or diarrhea</li>
-                <li>Persistent fever</li>
-                <li>Worsening rash</li>
-                <li>Change in heartbeat</li>
-                <li>Any new bleeding</li>
-            </ol>
-        </div>
-        
-        
-        
-        <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/how-covid-spreads.html">How Covid Spreads</a>
-        <ul>
-            <li>US Totals</li>
-            <li>Prevention</li>
-            <li>See a doctor if...</li>
-        </ul>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'scripts/covid_info.js' %}"></script>
     <script>document.getElementById("USTotalsSubmit").click();</script>
+    
 {% endblock %}

@@ -41,3 +41,9 @@
 .sm-logo {
     max-height: 20px;
 }
+.font-lt-bold {
+    font-weight: 600;
+}
+.font-very-bold {
+    font-weight: 900;
+}
