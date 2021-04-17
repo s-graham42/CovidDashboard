@@ -15,7 +15,7 @@ class PyCallR:
     def __init__(self):
         """ Initializes the class with the location of the scripts and the 
         location to save the resultant csv files. """
-        
+
         self.script_location = BASE_DIR + "/Brad's_Work/Py_call_R_project"
         self.csv_location = BASE_DIR + "/media/current_api_data"
 
@@ -45,7 +45,7 @@ class PyCallR:
 # os.system("Rscript " + a + " " + b)
 # NYT_States = pd.read_csv(b)
 
-    def get_new_nyt_states(self):
+    def get_new_nyt_us(self):
         """ Get a new set of New York Times data of US Totals.
         
         Runs the R script 'NYT_US_Data_Processing.R', which:
