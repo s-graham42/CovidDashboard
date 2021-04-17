@@ -1,9 +1,7 @@
 #--- Set working directory for this script from command line
 # trailing argument.
 
-a = commandArgs(trailingOnly = T)
-
-setwd(a)
+directory = commandArgs(trailingOnly = T)
 
 
 #--- Import US data from the NYT github repository into an R object
@@ -118,5 +116,5 @@ colnames(stage4)[colnames(stage4)=="cases"]="cumu_cases"
 
 
 #--- Write new dataframe as a CSV.
-write.csv(stage4,file='NYT_US.csv',row.names = FALSE)
+write.csv(stage4,file=directory,row.names = FALSE)
 
