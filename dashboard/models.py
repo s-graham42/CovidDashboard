@@ -4,7 +4,7 @@ from django.db import models
 class CsvFile(models.Model):
     name = models.CharField(max_length=150, unique=True)
     description  = models.TextField()
-    file = models.FileField(upload_to='csv_files')
+    file = models.FileField(upload_to='uploaded_csv_files')
     # access file details: (CsvFile object).file.name  / (CsvFile object).file.url
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

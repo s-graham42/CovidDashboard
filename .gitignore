@@ -3,5 +3,5 @@ csv_files/
 db.sqlite3
 __pycache__/
 migrations/
-media/
+uploaded_csv_files/
 .DS_Store

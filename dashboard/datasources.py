@@ -80,7 +80,7 @@ class NewYorkTimesUSData(DataSourceCSV):
         if self.file_is_from_today():
             return pd.read_csv(self.source_file, parse_dates=True)
         else:
-            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/NYT_US_data_processing.R")
+            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/NYT_US_data_processing.R " + self.source_file)
             return pd.read_csv(self.source_file, parse_dates=True).sort_values(by=['date'])
 
     def get_current_cases(self):
@@ -116,7 +116,7 @@ class NewYorkTimesStateData(DataSourceCSV):
     def __init__(self):
         self.source = "New York Times"  # string
         self.source_url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv"
-        self.source_file = BASE_DIR + "/media/current_api_data/NYTStates.csv"
+        self.source_file = BASE_DIR + "/media/current_api_data/NYT_States.csv"
         self.date = datetime.date.today()
         self.df = self.get_new_dataframe()
 
@@ -139,7 +139,7 @@ class NewYorkTimesStateData(DataSourceCSV):
         if self.file_is_from_today():
             return pd.read_csv(self.source_file, parse_dates=True)
         else:
-            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/Cumu_To_Daily_NYT.R")
+            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/NYT_Territory_Data_Processing.R " + self.source_file)
             return pd.read_csv(self.source_file, parse_dates=True)
 
                     # get all 'column' entries for a particular state (by fips number)
