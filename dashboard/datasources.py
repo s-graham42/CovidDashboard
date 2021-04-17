@@ -4,6 +4,7 @@ import os
 import pandas as pd
 from .models import CsvFile, State
 from covid_project.settings import BASE_DIR
+from dashboard.py_call_R import PyCallR
 
 
 # """
