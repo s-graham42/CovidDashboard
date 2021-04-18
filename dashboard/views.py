@@ -117,6 +117,9 @@ def compare_single_variable(request):
  
 # """
 
+def db_load_states(request):
+    pass
+
 def demo_charts(request):
     return render(request, "admin/demo_charts.html")
 

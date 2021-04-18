@@ -6,6 +6,20 @@ import csv
 import datetime
 from covid_project.settings import BASE_DIR
 
+def load_states_only():
+    """ loads sqlite database with info from /Brad's_Work/Py_call_R_project/States_Abb_FIPS.csv """
+
+    with open(BASE_DIR + "/Brad's_Work/Py_call_R_project/States_Abb_FIPS.csv") as csv_file:
+        opened_file = csv.reader(csv_file, delimiter=',')
+        # Name,Abbreviation,FIPS
+        row_count = 0
+        for row in opened_file:
+            if row[0] == "Name":
+                row_count += 1
+            else:
+                State.objects.update_or_create(defaults={'name': row[0], 'abbreviation': row[1]}, fips=row[2])
+                row_count += 1
+
 def check_and_create_states(file_to_load):
     checked_states = []
     with open(BASE_DIR + file_to_load.file.url) as csv_file:
