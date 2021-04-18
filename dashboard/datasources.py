@@ -81,8 +81,7 @@ class NewYorkTimesUSData(DataSourceCSV):
         if self.file_is_from_today():
             return pd.read_csv(self.source_file, parse_dates=True)
         else:
-            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/NYT_US_data_processing.R " + self.source_file)
-            return pd.read_csv(self.source_file, parse_dates=True).sort_values(by=['date'])
+            return PyCallR.get_new_nyt_us()
 
     def get_current_cases(self):
         return self.df.cumu_cases.iat[-1]
@@ -140,8 +139,7 @@ class NewYorkTimesStateData(DataSourceCSV):
         if self.file_is_from_today():
             return pd.read_csv(self.source_file, parse_dates=True)
         else:
-            os.system("Rscript " + BASE_DIR + "/Brad's_Work/Py_call_R_project/NYT_Territory_Data_Processing.R " + self.source_file)
-            return pd.read_csv(self.source_file, parse_dates=True)
+            return PyCallR.get_new_nyt_states()
 
                     # get all 'column' entries for a particular state (by fips number)
     def get_all_by_state(self, fips, column):
