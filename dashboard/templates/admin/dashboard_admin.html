@@ -8,7 +8,8 @@
     </div>
     <div class="row my-3 justify-content-center">
         <div class="col-6">
-            <h2 class="text-primary text-center">Populate Database from Provided .csv file:</h2>
+            <h2 class="text-primary text-center">Populate (or update) Database from Provided .csv file:</h2>
+            <a href="/dashboard_admin/view_states">View Current State Data</a>
         </div>
         <div class="col-2">
             <!-- Button trigger modal -->
@@ -27,7 +28,11 @@
                             <p>Usually this is done once when first starting up the project.</p>
                         </div>
                         <div class="modal-footer">
-                            <a href="#" type="button" class="btn btn-danger">Continue</a>
+                            <form action="/dashboard_admin/db_load_states" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" role="submit" class="btn btn-danger">Continue</button>
+                            </form>
+                            
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             
                         </div>

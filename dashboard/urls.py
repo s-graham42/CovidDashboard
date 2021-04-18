@@ -10,6 +10,7 @@ urlpatterns = [
     path('dashboard_admin/upload_csv', views.upload_csv),
     path('dashboard_admin/upload_success', views.upload_success),
     path('dashboard_admin/db_load_states', views.db_load_states),
+    path('dashboard_admin/view_states', views.view_states),
     path('dashboard_admin/db_load_csv/<int:id>', views.db_load_csv),
     path('dashboard_admin/db_load_success/<int:row_count>', views.db_load_sucess),
     path('apiData', views.apiData),
