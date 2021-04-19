@@ -193,7 +193,7 @@ def usTotalsChart(request):
     if request.method == "POST":
         start = request.POST['start_date']
         end = request.POST['end_date']
-        column = nyt_us_data.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'])
+        column = nyt_us_data.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'], request.POST['moving_average'])
 
         title = (f"U.S. {request.POST['cumulative_daily'].capitalize()} Covid-19 {request.POST['cases_deaths'].capitalize()} from {start} to {end}.")
         this_data_name = (f"U.S. {request.POST['cumulative_daily'].capitalize()} {request.POST['cases_deaths'].capitalize()}")
@@ -208,7 +208,7 @@ def usTotalsChart(request):
 
 def singleVariableOverTime(request):
     if request.method == "POST":
-        column = nyt_state_data.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'])
+        column = nyt_state_data.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'], request.POST['moving_average'])
         start = request.POST['start_date']
         end = request.POST['end_date']
         title = (f"{request.POST['cumulative_daily'].capitalize()} Covid-19 {request.POST['cases_deaths'].capitalize()} from {start} to {end}.")

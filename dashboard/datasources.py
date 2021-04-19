@@ -157,17 +157,32 @@ class NewYorkTimesStateData(DataSourceCSV):
                     # return dictionary {state: state name, data: list of date, value tuples
         return {"state": this_state.name, "data": list(this_xy)}
 
-    def get_column(self, interval, datapoint):
+    def get_column(self, interval, datapoint, moving_average):
+        column = ""
         if (interval == "cumulative" and datapoint == "cases"):
-            return "cumu_cases"
+            column = "cumu_cases"
         elif (interval == "cumulative" and datapoint == "deaths"):
-            return "cumu_deaths"
-        elif (interval == "daily" and datapoint == "cases"):
-            return "daily_cases"
-        elif (interval == "daily" and datapoint == "deaths"):
-            return "daily_deaths"
+            column = "cumu_deaths"
         else:
-            raise ValueError("Valid values are only 'cumulative' or 'daily', and 'cases' or 'deaths'.")
+            if (interval == "daily" and moving_average == "3-day"):
+                column = "3_Day_MA_D"
+            elif (interval == "daily" and moving_average == "7-day"):
+                column = "7_Day_MA_D"
+            elif (interval == "daily" and moving_average == "30-day"):
+                column = "30_Day_MA_D"
+            elif (interval == "daily" and moving_average == "raw"):
+                column = "daily_"
+            else:
+                raise ValueError("Valid values for Daily data are only 'cases' or 'deaths' and '3-day', '7-day', '30-day', or 'raw'.")
+            
+            if datapoint == "cases":
+                column = column + "cases"
+            elif datapoint == "deaths":
+                column = column + "deaths"
+            else:
+                raise ValueError("Valid values for Daily data are only 'cases' or 'deaths' and '3-day', '7-day', '30-day', or 'raw'.")
+
+        return column
 
 
 # """
