@@ -117,6 +117,18 @@ def compare_single_variable(request):
  
 # """
 
+def db_load_states(request):
+    if request.method == "POST":
+        load_states_only()
+
+    return redirect("/dashboard_admin/view_states")
+
+def view_states(request):
+    context = {
+        "all_states": State.objects.all().order_by("fips")
+    }
+    return render(request, "admin/view_states.html", context)
+
 def demo_charts(request):
     return render(request, "admin/demo_charts.html")
 

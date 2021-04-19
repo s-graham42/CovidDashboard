@@ -1,6 +1,113 @@
 {% extends "inner_base.html" %}
 {% block content %}
+<div class="container">
+    <div class="row mt-5 mb-2 justify-content-center">
+        <div class="col-8">
+            <h4 class="text-center">If this is your first time running the Dashboard, you will need to populate the database with U.S. State Information:</h4>
+        </div>
+    </div>
+    <div class="row my-3 justify-content-center">
+        <div class="col-6">
+            <h2 class="text-primary text-center">Populate (or update) Database from Provided .csv file:</h2>
+            <a href="/dashboard_admin/view_states">View Current State Data</a>
+        </div>
+        <div class="col-2">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#PopulateStateDataModal">Populate</button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="PopulateStateDataModal" tabindex="-1" aria-labelledby="PopulateStateData" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="PopulateStateData">Confirm:  Populate State Data?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure?  This will write U.S. State Data to the database from the provided .csv file.</p>
+                            <p>Usually this is done once when first starting up the project.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <form action="/dashboard_admin/db_load_states" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" role="submit" class="btn btn-danger">Continue</button>
+                            </form>
+                            
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <hr class="my-3">
+
+    <div class="row mt-5 mb-2 justify-content-center">
+        <div class="col-8">
+            <h5 class="text-center">Provide your own .csv file for processing into the Project Database:</h5>
+            <h5 class="text-center">(Currently, file must be in the format: "date","state","fips","cases","deaths")</h5>
+        </div>
+    </div>
+    <div class="row my-3 justify-content-center">
+        <div class="col-6">
+            <h2 class="text-primary text-center">Upload a .csv file:</h2>
+        </div>
+        <div class="col-2">
+            <a href="/dashboard_admin/upload_csv" type="button" class="btn btn-success">Go To Form</a>
+        </div>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="row mt-5 mb-2 justify-content-center">
+        <div class="col-8">
+            <h5 class="text-center">View a list of already uploaded files:</h5>
+        </div>
+    </div>
+    <div class="row my-3 justify-content-center">
+        <div class="col-6">
+            <h2 class="text-primary text-center">View Files:</h2>
+        </div>
+        <div class="col-2">
+            <a href="/dashboard_admin/upload_success" type="button" class="btn btn-success">Go To Files</a>
+        </div>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="row mt-5 mb-2 justify-content-center">
+        <div class="col-8">
+            <h5 class="text-center">Go to Django's built-in Admin Webapp (you will need superuser access):</h5>
+        </div>
+    </div>
+    <div class="row my-3 justify-content-center">
+        <div class="col-6">
+            <h2 class="text-primary text-center">Django Admin:</h2>
+        </div>
+        <div class="col-2">
+            <a href="/admin" type="button" class="btn btn-success">Go</a>
+        </div>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="row mt-5 mb-2 justify-content-center">
+        <div class="col-8">
+            <h5 class="text-center">View a collection of Demo Charts available from Chart.js:</h5>
+        </div>
+    </div>
+    <div class="row my-3 justify-content-center">
+        <div class="col-6">
+            <h2 class="text-primary text-center">Demo Charts:</h2>
+        </div>
+        <div class="col-2">
+            <a href="/dashboard_admin/demos" type="button" class="btn btn-success">Go</a>
+        </div>
+    </div>
+
+</div>
 <h1>Admin links will go here</h1>
 <ul>
     <li>Demo Charts</li>
@@ -8,5 +115,5 @@
     <li>Loading a csv file to DB</li>
     <li>Django Admin</li>
 </ul>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}

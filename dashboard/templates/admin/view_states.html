@@ -1,0 +1,37 @@
+{% extends "inner_base.html" %}
+{% block content %}
+
+{% load static %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8 my-5">
+            <h1 class="text-center">U.S. Territories with FIPS Code</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Abbreviation</th>
+                        <th scope="col">Fips #</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for state in all_states %}
+                    <tr>
+                        <td>{{state.name}}</td>
+                        <td>{{state.abbreviation}}</td>
+                        <td>{{state.fips}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}

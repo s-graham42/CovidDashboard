@@ -1,4 +1,4 @@
-# try to offload processing into the database here
+""" Module for methods to upload and process csv files into the sqlite database """
 
 from .forms import CsvFileForm
 from .models import CsvFile, State, Entry
@@ -6,7 +6,23 @@ import csv
 import datetime
 from covid_project.settings import BASE_DIR
 
+def load_states_only():
+    """ Creates State objects in sqlite database with info from /Brad's_Work/Py_call_R_project/States_Abb_FIPS.csv """
+
+    with open(BASE_DIR + "/Brad's_Work/Py_call_R_project/States_Abb_FIPS.csv") as csv_file:
+        opened_file = csv.reader(csv_file, delimiter=',')
+        # Name,Abbreviation,FIPS
+        row_count = 0
+        for row in opened_file:
+            if row[0] == "Name":
+                row_count += 1
+            else:
+                State.objects.update_or_create(defaults={'name': row[0], 'abbreviation': row[1]}, fips=row[2])
+                row_count += 1
+
 def check_and_create_states(file_to_load):
+    """ Creates State objects in sqlite database from an uploaded .csv file """
+
     checked_states = []
     with open(BASE_DIR + file_to_load.file.url) as csv_file:
         opened_file = csv.reader(csv_file, delimiter=',')
@@ -33,6 +49,8 @@ def check_and_create_states(file_to_load):
     return checked_states
 
 def replace_all_entries(file_to_load):
+    """ Replaces all Entry objects in sqlite database with information from an uploaded .csv file """
+
     Entry.objects.all().delete()  # DELETING ALL ENTRIES IN FAVOR OF NEW ENTRIES
     with open(BASE_DIR + file_to_load.file.url) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')                
@@ -50,6 +68,7 @@ def replace_all_entries(file_to_load):
     return row_count
 
 def calculate_all_dailies():
+    """ Calculates Daily Deaths and Daily Cases for existing Entry objects using their cumulative values."""
     all_states = State.objects.all()
     states_processed = 0
 
