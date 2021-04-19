@@ -66,3 +66,6 @@ $("#USTotalsForm").submit(function(e) {
     });
 });
 
+function showDiv(divId, element, value) {
+    document.getElementById(divId).style.display = element.value == value ? 'block' : 'none';
+}
