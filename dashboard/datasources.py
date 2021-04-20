@@ -215,11 +215,103 @@ class NewYorkTimesStateData(DataSourceCSV):
  
 # """
 
-class CDCData(DataSourceCSV):
+class CDCStateData(DataSourceCSV):
     
     def __init__(self):
         self.source = "CDC"  # string
         self.source_url = "https://data.cdc.gov/resource/9mfq-cb36.csv"
+        self.source_file = BASE_DIR + "/media/current_api_data/CDC_States.csv"
         self.date = datetime.date.today()
         self.df = self.get_new_dataframe()   # generates a new dataframe from a fresh api pull.
     
+    def __str__(self):
+        return f"{self.source} State api data ({self.date})"
+
+        # Check if the source file of cleaned data is from today.
+    def file_is_from_today(self):
+        if os.path.exists(self.source_file):
+            file_date = datetime.datetime.fromtimestamp(os.path.getmtime(self.source_file)).strftime("%Y-%m-%d")
+            today = datetime.datetime.now().strftime('%Y-%m-%d')
+            if today == file_date:
+                return True
+        return False
+
+        # We always want the most recent data.  Checks if the file we have is from today.
+        # If so, get dataframe from that.  If not, run R script to pull and process API
+        # data into csv and then use that to get a dataframe.
+    def get_new_dataframe(self):
+        if self.file_is_from_today():
+            return pd.read_csv(self.source_file, parse_dates=True)
+        else:
+            return PyCallR.get_new_cdc_states()
+
+                    # get all 'column' entries for a particular state (by fips number)
+    def get_all_by_state(self, fips, column):
+        """ get all 'column' entries for a particular state (by fips number) """
+
+        this_state = State.objects.get(fips=fips)
+        this_data = self.df.loc[(self.df["fips"] == fips), ["date", "state", column]].sort_values(by=['date'])
+        return {"state": this_state.name, "dates": this_data["date"].tolist(), "data": this_data[column].tolist()}
+
+                    # get all 'column' entries for a paticular state in a date range (start and end are strings yyyy-mm-dd)
+    def get_state_by_date_range(self, fips, start, end, column):
+        """ get all entries for a paticular state in a date range by column.
+        
+        Args:
+            fips: Integer fips number (unique identifier for a U.S. Territory).
+            start: String representation of start of date range.  Format: yyyy-mm-dd
+            end:  String representation of start of date range.  Format: yyyy-mm-dd
+            column: (String) Column label of desired information.
+        """
+
+        this_state = State.objects.get(fips=fips)
+                    # get the date and 'column' values by state and date range.
+        this_data = self.df.loc[(self.df["date"] >= start) & (self.df["date"] <= end) & (self.df["fips"] == fips), ["date", column]].sort_values(by=['date'])
+                    # chart generation needs a list of tuples in the format ('date', 'value')
+        this_xy = list(this_data.itertuples(index=False, name=None))
+                    # return dictionary {state: state name, data: list of date, value tuples
+        return {"state": this_state.name, "data": list(this_xy)}
+
+    def get_column(self, interval, datapoint, moving_average):
+        """ Returns the appropriate column name (string)
+        
+        Builds a string, based on provided arguments, that corresponds with a particular
+        column in the CDCStateData dataframe(self.df).
+
+        Args:
+            interval: (String) can be either 'cumulative' or 'daily'.
+            datapoint: (String) can be either 'cases' or 'deaths'.
+            moving_average: (String) can be either '3-day', '7-day', '30-day',
+                or 'raw'.
+
+        Returns:
+            a String corresponding to a particular column in the
+            CDCStateData dataframe(self.df).
+        """
+
+        column = ""
+        if (interval == "cumulative" and datapoint == "cases"):
+            column = "cumu_cases"
+        elif (interval == "cumulative" and datapoint == "deaths"):
+            column = "cumu_deaths"
+        else:
+            if (interval == "daily" and moving_average == "3-day"):
+                column = "3_Day_MA_D"
+            elif (interval == "daily" and moving_average == "7-day"):
+                column = "7_Day_MA_D"
+            elif (interval == "daily" and moving_average == "30-day"):
+                column = "30_Day_MA_D"
+            elif (interval == "daily" and moving_average == "raw"):
+                column = "daily_"
+            else:
+                raise ValueError("Valid values for Daily data are only 'cases' or 'deaths' and '3-day', '7-day', '30-day', or 'raw'.")
+            
+            if datapoint == "cases":
+                column = column + "cases"
+            elif datapoint == "deaths":
+                column = column + "deaths"
+            else:
+                raise ValueError("Valid values for Daily data are only 'cases' or 'deaths' and '3-day', '7-day', '30-day', or 'raw'.")
+
+        return column
+
