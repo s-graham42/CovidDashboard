@@ -18,7 +18,7 @@ from dashboard.py_call_R import PyCallR
 
 # Base class for holdng api data pulled as a csv file in a pandas dataframe.
 class DataSourceCSV:
-    """ Base class for holdng api data pulled as a csv file in a pandas dataframe. """
+    """ Base class for holdng api data (pulled as a csv file) in a pandas dataframe. """
     def __init__(self, name, url):
         self.source = name
         self.source_url = url
@@ -29,22 +29,28 @@ class DataSourceCSV:
         return f"{self.source} api data ({self.date})"
     
     def get_source(self):
+        """ Returns the name of the Data Source (String). """
         return self.source
     
     def get_source_url(self):
+        """ Returns the api endpoint url. """
         return self.source_url
 
     def get_date(self):
+        """ Returns the date the DataSourceCSV object was instantiated. """
         return self.date
 
     def get_df(self):
+        """ Returns the Pandas DataFrame representing the pulled api data. """
         return self.df
 
     def update_df(self):
+        """ Calls get_new_dataframe() to update the df attribute with new information from the api. """
         self.df = self.get_new_dataframe()
 
         # basic pull and read - does no transformations on data.
     def get_new_dataframe(self):
+        """ Called during __init__.  Returns a Pandas Dataframe from an API.  Assumes a .csv response."""
         api_df = pd.read_csv(self.source_url, parse_dates=True)
 
         return api_df
