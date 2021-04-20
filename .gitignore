@@ -3,5 +3,6 @@ csv_files/
 db.sqlite3
 __pycache__/
 migrations/
+settings.py
 uploaded_csv_files/
 .DS_Store
