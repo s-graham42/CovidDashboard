@@ -18,7 +18,7 @@ from dashboard.py_call_R import PyCallR
 
 # Base class for holdng api data pulled as a csv file in a pandas dataframe.
 class DataSourceCSV:
-
+    """ Base class for holdng api data pulled as a csv file in a pandas dataframe. """
     def __init__(self, name, url):
         self.source = name
         self.source_url = url
