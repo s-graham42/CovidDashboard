@@ -1,6 +1,7 @@
 .vscode/
 csv_files/
 Brad's_Work/
+Transparency/
 db.sqlite3
 __pycache__/
 migrations/
