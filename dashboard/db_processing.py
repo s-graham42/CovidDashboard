@@ -9,7 +9,7 @@ from covid_project.settings import BASE_DIR
 def load_states_only():
     """ Creates State objects in sqlite database with info from /Brad's_Work/Py_call_R_project/States_Abb_FIPS.csv """
 
-    with open(BASE_DIR + "/Brad's_Work/Py_call_R_project/States_Abb_FIPS.csv") as csv_file:
+    with open(BASE_DIR + "/Transparency/Py_call_R_project/States_Abb_FIPS.csv") as csv_file:
         opened_file = csv.reader(csv_file, delimiter=',')
         # Name,Abbreviation,FIPS
         row_count = 0
