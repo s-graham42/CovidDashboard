@@ -15,7 +15,7 @@ class PyCallR:
     - csv_directory: File Path to destination folder for processed .csv files. (String)
     """
 
-    script_directory = BASE_DIR + "/Brad's_Work/Py_call_R_project"
+    script_directory = BASE_DIR + "/Transparency/Py_call_R_project"
     csv_directory = BASE_DIR + "/media/current_api_data"
 
 
@@ -36,15 +36,7 @@ class PyCallR:
         os.system("Rscript " + script_to_run + " " + file_to_save)
 
         return pd.read_csv(file_to_save, parse_dates=True).sort_values(by=['date'])
-    
-# # Path to R script.
-# a = BASE_DIR + "/Brad's_Work/Py_call_R_project/NYT_Territory_Data_Processing.R"
 
-# # Path to directory in which the produced CSV should be placed and where it can be retrieved.
-# b = "/Users/neo/Drive/Python/WuFlu_Dashboard/WuFlu_Sandbox/WD_Sandbox/Test_Folder/NYT_States.csv"
-
-# os.system("Rscript " + a + " " + b)
-# NYT_States = pd.read_csv(b)
 
     @classmethod
     def get_new_nyt_us(self):
@@ -64,14 +56,6 @@ class PyCallR:
 
         return pd.read_csv(file_to_save, parse_dates=True).sort_values(by=['date'])
 
-# # Path to R script
-# a = "/Users/neo/Drive/Python/WuFlu_Dashboard/WuFlu_Sandbox/WD_Sandbox/NYT_US_Data_Processing.R"
-
-# # Path to directory in which the produced CSV should be placed and where it can be retrieved.
-# b = "/Users/neo/Drive/Python/WuFlu_Dashboard/WuFlu_Sandbox/WD_Sandbox/Test_Folder/NYT_US.csv"
-
-# os.system("Rscript " + a + " " + b)
-# NYT_US = pd.read_csv(b)
 
     @classmethod
     def get_new_cdc_states(self):
@@ -91,15 +75,3 @@ class PyCallR:
 
         return pd.read_csv(file_to_save, parse_dates=True).sort_values(by=['date'])
 
-
-# # Path to R script
-# a = "/Users/neo/Drive/Python/WuFlu_Dashboard/WuFlu_Sandbox/WD_Sandbox/CDC_Territory_Data_Processing.R"
-
-# # Path to directory in which the produced CSV should be placed and where it can be retrieved.
-# b = "/Users/neo/Drive/Python/WuFlu_Dashboard/WuFlu_Sandbox/WD_Sandbox/Test_Folder/CDC_States.csv"
-
-# # Working directory for current R script.
-# c = "/Users/neo/Drive/Python/WuFlu_Dashboard/WuFlu_Sandbox/WD_Sandbox"
-
-# os.system("Rscript " + a + " " + b + " " + c)
-# NYT_US = pd.read_csv(b)
