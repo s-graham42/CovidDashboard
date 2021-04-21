@@ -19,10 +19,19 @@ from .datasources import *
 # """
 
 nyt_us_data = NewYorkTimesUSData()
-print(nyt_us_data, " initialized.")
+print(nyt_us_data, "initialized.")
 nyt_state_data = NewYorkTimesStateData()
-print(nyt_state_data, " initialized.")
+print(nyt_state_data, "initialized.")
+cdc_state_data = CDCStateData()
+print(cdc_state_data, "initialized.")
 
+def get_datasource(name):
+    if name == "NewYorkTimes":
+        return nyt_state_data
+    elif name == "CDC":
+        return cdc_state_data
+    else:
+        return ValueError("Invalid Name.")
 
 # """
  
@@ -65,14 +74,15 @@ def apiData(request):
  
 # """
 
-def nyt_svot(request):
-    current_date = nyt_state_data.get_date().strftime('%Y-%m-%d')
+def singleVariable(request, source):
+    data_source = get_datasource(source)
+    current_date = data_source.get_date().strftime('%Y-%m-%d')
     context = {
+        "data_source": data_source.get_source(),
         "all_states" : State.objects.all().order_by("fips"),
         "current_date": current_date,
-        
     }
-    return render(request, "NYT_single_variable_over_time.html", context)
+    return render(request, "single_variable_over_time.html", context)
 
 def compare_daily_cases(request):
     caseData = []
@@ -106,7 +116,7 @@ def compare_single_variable(request):
         "caseData" : caseData,
         "deathData" : deathData,
     }
-    return render(request, "single_variable_over_time.html", context)
+    return render(request, "single_variable_ot.html", context)
 
 # """
  
@@ -206,17 +216,18 @@ def usTotalsChart(request):
             'dataset': this_dataset})
 
 
-def singleVariableOverTime(request):
+def singleVariableOverTime(request, source):
     if request.method == "POST":
-        column = nyt_state_data.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'], request.POST['moving_average'])
+        data_source = get_datasource(source)
+        column = data_source.get_column(request.POST['cumulative_daily'], request.POST['cases_deaths'], request.POST['moving_average'])
         start = request.POST['start_date']
         end = request.POST['end_date']
         title = (f"{request.POST['cumulative_daily'].capitalize()} Covid-19 {request.POST['cases_deaths'].capitalize()} from {start} to {end}.")
 
-        state_1 = nyt_state_data.get_state_by_date_range(int(request.POST['state_1']), start, end, column)
-        state_2 = nyt_state_data.get_state_by_date_range(int(request.POST['state_2']), start, end, column)
-        state_3 = nyt_state_data.get_state_by_date_range(int(request.POST['state_3']), start, end, column)
-        state_4 = nyt_state_data.get_state_by_date_range(int(request.POST['state_4']), start, end, column)
+        state_1 = data_source.get_state_by_date_range(int(request.POST['state_1']), start, end, column)
+        state_2 = data_source.get_state_by_date_range(int(request.POST['state_2']), start, end, column)
+        state_3 = data_source.get_state_by_date_range(int(request.POST['state_3']), start, end, column)
+        state_4 = data_source.get_state_by_date_range(int(request.POST['state_4']), start, end, column)
         # returns dictionary {'state': state name, 'data': list of tuples [(date, datapoint), (...] }
         
         return JsonResponse(data={
