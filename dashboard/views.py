@@ -19,9 +19,12 @@ from .datasources import *
 # """
 
 nyt_us_data = NewYorkTimesUSData()
-print(nyt_us_data, " initialized.")
+print(nyt_us_data, "initialized.")
 nyt_state_data = NewYorkTimesStateData()
-print(nyt_state_data, " initialized.")
+print(nyt_state_data, "initialized.")
+cdc_state_data = CDCStateData()
+print(cdc_state_data, "initialized.")
+
 
 
 # """
