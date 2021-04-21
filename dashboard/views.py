@@ -79,7 +79,6 @@ def singleVariable(request, source):
     current_date = data_source.get_date().strftime('%Y-%m-%d')
     context = {
         "data_source": data_source.get_source(),
-        "data_logo": data_source.get_logo(),
         "all_states" : State.objects.all().order_by("fips"),
         "current_date": current_date,
     }
