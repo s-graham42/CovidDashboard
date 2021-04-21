@@ -66,7 +66,7 @@ class DataSourceCSV:
 
 class NewYorkTimesUSData(DataSourceCSV):
     def __init__(self):
-        self.source = "New York Times"  # string
+        self.source = "NewYorkTimes"  # string
         self.source_url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv"
         self.source_file = BASE_DIR + "/media/current_api_data/NYT_US.csv"
         self.date = datetime.date.today()
@@ -135,7 +135,7 @@ class NewYorkTimesUSData(DataSourceCSV):
 class NewYorkTimesStateData(DataSourceCSV):
     
     def __init__(self):
-        self.source = "New York Times"  # string
+        self.source = "NewYorkTimes"  # string
         self.source_url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv"
         self.source_file = BASE_DIR + "/media/current_api_data/NYT_States.csv"
         self.date = datetime.date.today()
