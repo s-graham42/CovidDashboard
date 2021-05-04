@@ -63,6 +63,8 @@ class DataSourceCSV:
 #  88  Y8  dP      88       8888Y"  dP""""Yb   88   dP""""Yb 8bodP'  YbodP  `YbodP' 88  Yb  YboodP 888888 8bodP' 
  
 # """
+#TODO: [CD-25] Docstrings for NewYorkTimesUSData class
+
 
 class NewYorkTimesUSData(DataSourceCSV):
     def __init__(self):
@@ -131,6 +133,7 @@ class NewYorkTimesUSData(DataSourceCSV):
         return this_xy
 
 
+# TODO: [CD-26] docstrings for NewYorkTimesStateData class
 
 class NewYorkTimesStateData(DataSourceCSV):
     
@@ -214,6 +217,8 @@ class NewYorkTimesStateData(DataSourceCSV):
 #   YboodP 8888Y"   YboodP     8888Y"  dP""""Yb   88   dP""""Yb 8bodP'  YbodP  `YbodP' 88  Yb  YboodP 888888 
  
 # """
+
+#TODO: [CD-27] Docstrings for CDCStateData class
 
 class CDCStateData(DataSourceCSV):
     
