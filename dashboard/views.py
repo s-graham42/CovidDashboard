@@ -17,7 +17,7 @@ from .datasources import *
 #  88 88  Y8 88   88       8888Y"  dP""""Yb   88   dP""""Yb 8bodP'  YbodP  `YbodP' 88  Yb  YboodP 888888 8bodP' 
  
 # """
-
+# TODO: [CD-31] comment out the datasource initialization during migrations
 nyt_us_data = NewYorkTimesUSData()
 print(nyt_us_data, "initialized.")
 nyt_state_data = NewYorkTimesStateData()
