@@ -33,7 +33,7 @@ class PyCallR:
 
         script_to_run = self.script_directory + "/NYT_Territory_Data_Processing.R"
         file_to_save = self.csv_directory + "/NYT_States.csv"
-        os.system("Rscript " + script_to_run + " " + file_to_save)
+        os.system("Rscript " + script_to_run + " " + file_to_save + " " + self.script_directory)
 
         return pd.read_csv(file_to_save, parse_dates=True).sort_values(by=['date'])
 
@@ -52,7 +52,7 @@ class PyCallR:
 
         script_to_run = self.script_directory + "/NYT_US_Data_Processing.R"
         file_to_save = self.csv_directory + "/NYT_US.csv"
-        os.system("Rscript " + script_to_run + " " + file_to_save)
+        os.system("Rscript " + script_to_run + " " + file_to_save + " " + self.script_directory)
 
         return pd.read_csv(file_to_save, parse_dates=True).sort_values(by=['date'])
 
