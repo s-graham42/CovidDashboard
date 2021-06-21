@@ -50,7 +50,7 @@ class PyCallR:
             A Pandas DataFrame read from the resultant csv file.
         """
 
-        script_to_run = self.script_directory + "/NYT_US_Data_Processing.R"
+        script_to_run = self.script_directory + "/NYT_US_data_processing.R"
         file_to_save = self.csv_directory + "/NYT_US.csv"
         os.system("Rscript " + script_to_run + " " + file_to_save + " " + self.script_directory)
 
