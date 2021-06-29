@@ -1,3 +1,4 @@
+media/
 .vscode/
 csv_files/
 Brad's_Work/
@@ -6,5 +7,4 @@ db.sqlite3
 __pycache__/
 migrations/
 covid_project/settings.py
-uploaded_csv_files/
 .DS_Store
