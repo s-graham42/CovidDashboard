@@ -82,7 +82,12 @@ class NewYorkTimesUSData(DataSourceCSV):
             file_date = datetime.datetime.fromtimestamp(os.path.getmtime(self.source_file)).strftime("%Y-%m-%d")
             today = datetime.datetime.now().strftime('%Y-%m-%d')
             if today == file_date:
+                print(f"{self.source} U.S. Data file is from today.")
                 return True
+            else:
+                print(f"{self.source} U.S. Data file is NOT from today.")
+        else:
+            print(f"{self.source} U.S. Data file does not exist.")
         return False
 
     def get_new_dataframe(self):
@@ -153,7 +158,12 @@ class NewYorkTimesStateData(DataSourceCSV):
             file_date = datetime.datetime.fromtimestamp(os.path.getmtime(self.source_file)).strftime("%Y-%m-%d")
             today = datetime.datetime.now().strftime('%Y-%m-%d')
             if today == file_date:
+                print(f"{self.source} State Data file is from today.")
                 return True
+            else:
+                print(f"{self.source} State Data file is NOT from today.")
+        else:
+            print(f"{self.source} State Data file does not exist.")
         return False
 
         # We always want the most recent data.  Checks if the file we have is from today.
@@ -238,7 +248,12 @@ class CDCStateData(DataSourceCSV):
             file_date = datetime.datetime.fromtimestamp(os.path.getmtime(self.source_file)).strftime("%Y-%m-%d")
             today = datetime.datetime.now().strftime('%Y-%m-%d')
             if today == file_date:
+                print(f"{self.source} State Data file is from today.")
                 return True
+            else:
+                print(f"{self.source} State Data file is NOT from today.")
+        else:
+            print(f"{self.source} State Data file does not exist.")
         return False
 
         # We always want the most recent data.  Checks if the file we have is from today.
