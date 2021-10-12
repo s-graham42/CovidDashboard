@@ -85,7 +85,7 @@ sqlparse       | 0.4.1
 >git clone https://github.com/s-graham42/CovidDashboard.git
 ```
 
-**7) cd into the covid_project folder.**  
+**7) cd into the CovidDashboard folder.**  
 (You know you are in the right place if it's the directory with manage.py in it)
 
 **8)  Migrate the database models.**  
