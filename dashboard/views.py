@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import CsvFileForm
-from .models import CsvFile, State, Entry
+from .models import CsvFile, State
 from django.http import JsonResponse
 import csv
 import json
